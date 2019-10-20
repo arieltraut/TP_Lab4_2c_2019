@@ -1,39 +1,54 @@
 import { query, trigger, transition, style, animateChild, group, animate } from '@angular/animations';
 
-export const slideInAnimation =
-  trigger('routeAnimations', [
-    transition('isRight => isLeft', slideTo('left') ),
-    transition('isLeft => isRight', slideTo('right') ),
-    // transition('isRight => *', slideTo('left') ),
-    // transition('isLeft => *', slideTo('right') )
-  ]);
-
-function slideTo(direction) {
-  const optional = { optional: true };
-  return [
+const optional = { optional: true };
+const toTheRight = [
     query(':enter, :leave', [
       style({
         position: 'absolute',
-        top: 0,
-        [direction]: 0,
-        width: '100%'
+        top: '0',
+        right: 0,
+        width: '100%',
       })
     ], optional),
     query(':enter', [
-      style({ [direction]: '-100%'})
+      style({ right: '-100%',  })
     ]),
     group([
       query(':leave', [
-        animate('600ms ease', style({ [direction]: '100%'}))
+        animate('300ms ease', style({ right: '100%', }))
       ], optional),
       query(':enter', [
-        animate('600ms ease', style({ [direction]: '0%'}))
+        animate('300ms ease', style({ right: '0%'}))
       ])
     ]),
-    // Normalize the page style... Might not be necessary
-
-    // Required only if you have child animations on the page
-    // query(':leave', animateChild()),
-    // query(':enter', animateChild()),
   ];
-}
+const toTheLeft = [
+    query(':enter, :leave', [
+      style({
+        position: 'absolute',
+        top: '0',
+        left: 0,
+        width: '100%',
+      })
+    ], optional),
+    query(':enter', [
+      style({ right: '-100%',  })
+    ]),
+    group([
+      query(':leave', [
+        animate('300ms ease', style({ left: '100%', }))
+      ], optional),
+      query(':enter', [
+        animate('300ms ease', style({ left: '0%'}))
+      ])
+    ]),
+  ];
+
+
+export const slideInAnimation =
+  trigger('routeAnimations', [
+    transition('isRight => isLeft', toTheLeft),
+    transition('isLeft => isRight', toTheRight),
+    // transition('isRight => *', slideTo('left') ),
+    // transition('isLeft => *', slideTo('right') )
+  ]);
