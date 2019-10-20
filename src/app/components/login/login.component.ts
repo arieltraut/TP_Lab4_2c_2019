@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,12 @@ export class LoginComponent implements OnInit {
   @ViewChild('alertError', { static: true }) alertError: ElementRef;
   isLoading = false;
 
-  constructor( public authService: FirebaseAuthService) { }
+  constructor( public authService: FirebaseAuthService,
+               private router: Router) {
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/dashboard']);
+    }
+   }
 
   ngOnInit() {
   }

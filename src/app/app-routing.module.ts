@@ -9,10 +9,10 @@ import { RegisterComponent } from './components/register/register.component';
 
 
 const routes: Routes = [
-    {path: 'login', component: LoginComponent, data: {animation: 'Fade2Page'}},
+    {path: 'login', component: LoginComponent, data: {animation: 'isRight'}},
     {path: '', redirectTo: '/login', pathMatch: 'full'},
     {path: 'dashboard', component: DashboardComponent},
-    {path: 'register', component: RegisterComponent}
+    {path: 'register', component: RegisterComponent, data: {animation: 'isLeft'}}
 
 
 ];
