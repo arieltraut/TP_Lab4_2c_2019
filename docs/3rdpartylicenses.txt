@@ -23,6 +23,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
+@angular/animations
+MIT
+
 @angular/common
 MIT
 
@@ -35,6 +38,9 @@ MIT
 @angular/fire/auth
 
 @angular/fire/firestore
+
+@angular/forms
+MIT
 
 @angular/platform-browser
 MIT
