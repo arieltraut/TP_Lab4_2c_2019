@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
 
 
 import { AppComponent } from './app.component';
@@ -31,6 +33,12 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FirebaseAuthService } from './services/firebase-auth.service';
 import { RegisterComponent } from './components/register/register.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { FirebaseBdService } from './services/firebase-bd.service';
+import { AdminAltasComponent } from './pages/admin-altas/admin-altas.component';
 
 
 
@@ -41,7 +49,12 @@ import { RegisterComponent } from './components/register/register.component';
     AppComponent,
     LoginComponent,
     DashboardComponent,
-    RegisterComponent
+    RegisterComponent,
+    NavbarComponent,
+    UserProfileComponent,
+    SidebarComponent,
+    FooterComponent,
+    AdminAltasComponent
   ],
   imports: [
     BrowserModule,
@@ -51,9 +64,12 @@ import { RegisterComponent } from './components/register/register.component';
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    AngularFontAwesomeModule
   ],
-  providers: [FirebaseAuthService],
+  providers: [FirebaseAuthService,
+              FirebaseBdService,
+              AngularFirestore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

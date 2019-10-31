@@ -53,6 +53,14 @@
               <p class="text-muted mb-4">Para poder operar debes tener una cuenta.</p>
               <form [formGroup]="registerForm" (ngSubmit)="onRegistrar()">
                 <div class="form-group mb-3">
+                    <input type="text" formControlName="name" placeholder="Nombre" class="form-control rounded-pill border-0 shadow-sm px-4"
+                      [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                    <div *ngIf="submitted && !!f.name.errors" class="invalid-feedback">
+                      <div *ngIf="!!f.name.errors.required">Debe ingresar su nombre</div>
+                      <div *ngIf="!!f.name.errors.name">name debe ser valido</div>
+                    </div>
+                </div>
+                <div class="form-group mb-3">
                   <input type="text" formControlName="email" placeholder="Correo electronico" class="form-control rounded-pill border-0 shadow-sm px-4"
                     [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
                   <div *ngIf="submitted && !!f.email.errors" class="invalid-feedback">

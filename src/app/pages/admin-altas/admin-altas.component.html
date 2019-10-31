@@ -1,0 +1,194 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(assets/profile-cover.jpg); background-size: cover; background-position: center top;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-7 col-md-10">
+        <h1 class="display-2 text-white">Alta Usuarios</h1>
+        <p class="text-white mt-0 mb-5">This is your profile page. You can see the progress you've made with your work and manage your projects or assigned tasks</p>
+        <a href="#!" class="btn btn-info">Edit profile</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid mt--7 contenedor">
+    <div class="row">
+        <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+          <div class="card card-profile shadow">
+            <div class="row justify-content-center">
+              <div class="col-lg-3 order-lg-2">
+                <div class="card-profile-image">
+                  <a href="javascript:void(0)">
+                    <img [src]="imgURL? imgURL : 'assets/default-profile.png'" class="rounded-circle">
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+              <div class="d-flex justify-content-between">
+                  <!-- <p class="btn btn-sm btn-default">Message</p> -->
+                  <!-- <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">Message</a> -->
+              </div>
+            </div>
+            <div class="card-body pt-0 pt-md-4">
+              <div class="row">
+                <div class="col">
+                  <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                    <div>
+                      <span class="heading">22</span>
+                      <span class="description">Turnos</span>
+                    </div>
+                    <div>
+                      <span class="heading">10</span>
+                      <span class="description">Estudios</span>
+                    </div>
+                    <div>
+                      <span class="heading">5</span>
+                      <span class="description">Encuestas</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <h3>{{this.registerForm.value.name? this.registerForm.value.name : 'Jessica Jones'}}<span class="font-weight-light">, 35</span>
+                </h3>
+                <div class="h5 font-weight-300">
+                  <i class="ni location_pin mr-2"></i>Buenos Aires, Argentina
+                </div>
+                <div class="h5 mt-4">
+                  <i class="ni business_briefcase-24 mr-2"></i>{{this.registerForm.value.type? this.registerForm.value.type + ' - Smile Dental Center' : 'Solution Manager - Smile Dental Center'}}
+                </div>
+                <div>
+                  <i class="ni education_hat mr-2"></i>{{this.registerForm.value.email? this.registerForm.value.email : 'jesee@example.com'}}
+                </div>
+                <hr class="my-4" />
+                <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
+                <a href="javascript:void(0)">Show more</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+    <div class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Registro</h3>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Alert OK-->
+          <div #alertOk class="alert alert-dark d-none" role="alert">
+              Te registrate con éxito! <a routerLink="/login" class="alert-link">Incia sesión</a>
+            </div>
+            <!-- Alert ERROR-->
+            <div #alertError class="alert alert-dang`er d-none" role="alert">
+              Lo sentimos! Ocurrio un error
+            </div>
+          <form [formGroup]="registerForm" (ngSubmit)="onRegistrar()">
+            <h6 class="heading-small text-muted mb-4">User information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Nombre</label>
+                    <input type="text" formControlName="name" id="input-username" class="form-control form-control-alternative" placeholder="Nombre" value="lucky.jesse"
+                    [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                    <div *ngIf="submitted && !!f.name.errors" class="invalid-feedback">
+                      <div *ngIf="!!f.name.errors.required">Debe ingresar su nombre</div>
+                      <div *ngIf="!!f.name.errors.name">name debe ser valido</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Email</label>
+                    <input type="text" formControlName="email" id="input-email" class="form-control form-control-alternative" placeholder="jesse@example.com"
+                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                    <div *ngIf="submitted && !!f.email.errors" class="invalid-feedback">
+                      <div *ngIf="!!f.email.errors.required">Debe ingresar email</div>
+                      <div *ngIf="!!f.email.errors.email">Email debe ser valido</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">Contraseña</label>
+                    <input type="password" formControlName="password" id="input-first-name" class="form-control form-control-alternative" placeholder="Contraseña" value="Lucky"
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                    <div *ngIf="submitted && !!f.password.errors" class="invalid-feedback">
+                      <div *ngIf="!!f.password.errors.required">Debe ingresar contraseña</div>
+                      <div *ngIf="!!f.password.errors.minlength">Debe contener al menos 6 caracteres</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">Repetir Contraseña</label>
+                    <input type="password" formControlName="confirmPassword" id="input-last-name" class="form-control form-control-alternative" placeholder="Repetir Contraseña" value="Jesse"
+                    [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+                    <div *ngIf="submitted && !!f.confirmPassword.errors" class="invalid-feedback">
+                      <div *ngIf="!!f.confirmPassword.errors.required">Debe ingresar contraseña nuevamente</div>
+                      <div *ngIf="!!f.confirmPassword.errors.mustMatch">Las contraseña deben coincidir</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Address -->
+            <h6 class="heading-small text-muted mb-4">Contact information</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div [ngClass]="{'col-6': this.registerForm.value.type == 'Especialista', 'col-md-12': this.registerForm.value.type != 'Especialista' }">
+                  <div class="form-group">
+                    <label class="form-control-label" for="select-type">Tipo Usuario</label>
+                    <select formControlName="type" class="form-control form-control-alternative" id="select-type">
+                      <option value="" disabled selected>Elegir tipo de usuario</option>
+                      <option>Cliente</option>
+                      <option>Recepcionista</option>
+                      <option>Especialista</option>
+                    </select>
+                  </div>
+                </div>
+                <div *ngIf="(this.registerForm.value.type == 'Especialista')" class="col-md-6">
+                    <div class="form-group">
+                      <label class="form-control-label" for="select-esp">Especialidad</label>
+                      <select formControlName="especialidad" class="form-control form-control-alternative" id="select-esp">
+                        <option *ngFor='let especialidad of especialidades' value="especialidad">{{especialidad}}</option>
+                      </select>
+                    </div>
+                  </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address">Imagen perfil</label>
+                    <label for="file" class="form-control form-control-alternative labelFile"><i class="fas fa-upload input-icono"></i>{{filename}}</label>
+                    <input #file type="file" id="file" ng2FileSelect accept='image/*'class="inputfile" (change)="preview(file.files); getFileName($event)" /> <!--[uploader]="this.uploader"-->
+                  </div>
+                </div>
+                <div class="col-12">
+                    <span style="color:red;" *ngIf="message">{{message}}</span>
+                </div>
+              </div>
+            </div>
+            <!-- <hr class="my-4" /> -->
+            <!-- Description -->
+            <!-- <h6 class="heading-small text-muted mb-4">About me</h6> -->
+            <div class="pl-lg-4">
+              <div class="form-group text-center">
+                  <button *ngIf="!isLoading" type="submit" class="btn btn-registro btn-primary">Registrar Usuario</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

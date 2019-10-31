@@ -1,0 +1,110 @@
+.bg-custom-1 {
+  background-color: #85144b;
+}
+
+.bg-custom-2 {
+background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+}
+
+/* .dropdown-item{
+  padding: 10px;
+} */
+
+.fa-fw, .fas{
+  margin-right: 20px;
+}
+
+
+/* .navbar-top{
+    background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%);
+} */
+
+.navbar-top  {
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  background-color: transparent !important;
+}
+
+
+.avatar img {
+  width: 100%;
+  border-radius: 50%;
+}
+.avatar-sm {
+  width: 36px;
+  height: 36px;
+  font-size: 0.875rem;
+}
+
+/**********dropdown****************/
+/***********dropdown*/
+
+@media (min-width: 768px){
+  .navbar:not(.navbar-nav-hover) .dropdown-menu.show {
+      opacity: 1;
+      pointer-events: auto;
+      animation: show-navbar-dropdown .25s ease forwards;
+  }
+  .navbar-expand-md .navbar-nav .dropdown-menu {
+      position: absolute;
+  }
+  .navbar .dropdown-menu {
+      opacity: 0;
+      pointer-events: none;
+      margin: 0;
+  }
+  }
+  .dropdown-menu.show {
+      display: block;
+  }
+  .dropdown-menu {
+      min-width: 12rem;
+  }
+  .dropdown-menu-right {
+      right: 0;
+      left: auto;
+  }
+  .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      z-index: 1000;
+      display: none;
+      float: left;
+      min-width: 10rem;
+      padding: 0.5rem 0;
+      margin: 0.125rem 0 0;
+      font-size: 1rem;
+      color: #525f7f;
+      text-align: left;
+      list-style: none;
+      background-color: #fff;
+      background-clip: padding-box;
+      border: 0 solid rgba(0, 0, 0, 0.15);
+      border-radius: 0.4375rem;
+      box-shadow: 0 50px 100px rgba(50, 50, 93, 0.1), 0 15px 35px rgba(50, 50, 93, 0.15), 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (min-width: 768px){
+  .navbar .dropdown-menu-right:before {
+      right: 20px;
+      left: auto;
+  }
+  .navbar .dropdown-menu-arrow:before {
+      background: #fff;
+      box-shadow: none;
+      content: '';
+      display: block;
+      height: 12px;
+      width: 12px;
+      position: absolute;
+      bottom: 100%;
+      transform: rotate(-45deg) translateY(12px);
+      z-index: -5;
+      border-radius: 2px;
+  }
+  }
+
+  .dropdown-menu {
+    min-width: 12rem;
+  }

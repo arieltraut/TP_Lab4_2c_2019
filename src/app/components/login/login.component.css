@@ -9,3 +9,7 @@
   background-size: cover;
   background-position: right center;
 }
+
+.rounded-pill{
+  border-radius: 0.375rem !important;
+}

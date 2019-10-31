@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   constructor( public authService: FirebaseAuthService,
                private router: Router) {
     if (this.authService.isLoggedIn) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/profile']);
     }
    }
 

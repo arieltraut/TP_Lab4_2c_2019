@@ -1,0 +1,31 @@
+.footer {
+  background: #f7fafc;
+  margin: 2.5rem 0;
+}
+
+.footer .copyright {
+  font-size: 0.875rem;
+}
+.text-muted {
+  color: #8898aa !important;
+}
+.text-center {
+  text-align: center !important;
+}
+
+.footer .nav .nav-item .nav-link, .footer .footer-link {
+  color: #8898aa !important;
+}
+.nav-footer .nav-link {
+  font-size: 0.875rem;
+}
+.nav-link {
+  color: #525f7f;
+}
+.nav-link {
+  display: block;
+  padding: 0.25rem 0.75rem;
+}
+.font-weight-bold {
+  font-weight: 600 !important;
+}

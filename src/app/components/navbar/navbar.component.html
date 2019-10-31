@@ -1,0 +1,58 @@
+<nav class="navbar navbar-dark bg-dark navbar-expand-sm d-none d-md-block navbar-top" >
+  <!-- <a class="navbar-brand" href="#">
+    <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png" width="30" height="30" alt="logo">
+    BootstrapBay
+  </a> -->
+  <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-list-4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button> -->
+  <div class="collapse navbar-collapse" id="navbar-list-4">
+    <!-- <ul class="navbar-nav ml-auto" *ngIf="authService.userData as user">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg" width="40" height="40" class="rounded-circle">
+          </a> -->
+              <!-- <span class="mb-0 text-sm  font-weight-bold">{{(user.name) ? user.name : 'User'}}</span> -->
+
+              <ul class="navbar-nav align-items-center d-none d-md-flex ml-auto">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <div class="media align-items-center">
+                        <span class="avatar avatar-sm rounded-circle">
+                            <img alt="Image placeholder" src="{{(usuario.photoURL)}}">
+                          </span>
+                        <div class="media-body ml-2 d-none d-lg-block">
+                          <span class="mb-0 text-sm  font-weight-bold">{{(usuario.displayName)}}</span> <!-- <span class="mb-0 text-sm  font-weight-bold">{{(user.name) ? user.name : 'User'}}</span> -->
+                        </div>
+                      </div>
+                    </a>
+              <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+                  <div class=" dropdown-header noti-title">
+                    <h6 class="text-overflow m-0">Welcome!</h6>
+                  </div>
+                  <a [routerLink]="['/profile']" class="dropdown-item">
+                    <i class="fas fa-user-alt"></i>
+                    <span>My profile</span>
+                  </a>
+                  <a href="./examples/profile.html" class="dropdown-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                  </a>
+                  <a href="./examples/profile.html" class="dropdown-item">
+                    <i class="fa fa-book fa-fw"></i>
+                    <span>Activity</span>
+                  </a>
+                  <a href="./examples/profile.html" class="dropdown-item">
+                    <i class="fa fa-book fa-fw"></i>
+                    <span>Support</span>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a href="#!" class="dropdown-item" (click)="authService.SignOut()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                  </a>
+              </div>
+      </li>
+    </ul>
+  </div>
+</nav>

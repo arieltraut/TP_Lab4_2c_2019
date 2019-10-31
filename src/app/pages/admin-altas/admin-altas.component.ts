@@ -1,15 +1,15 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { Router } from '@angular/router';
-// para poder hacer las validaciones
-// import { Validators, FormBuilder, FormControl, FormGroup} from '@angular/forms';
+
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-admin-altas',
+  templateUrl: './admin-altas.component.html',
+  styleUrls: ['./admin-altas.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class AdminAltasComponent implements OnInit {
+
   @ViewChild('alertOk', { static: true }) alertOk: ElementRef;
   @ViewChild('alertError', { static: true }) alertError: ElementRef;
 
@@ -17,13 +17,15 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
 
+  especialidades: string[] = ['Cariologia', 'Ortodoncia', 'Implantologia', 'Radiologia'];
+  filename = 'Elegir archivo';
+  imagePath: any;
+  imgURL: any;
+  message: string;
+
   constructor( private authenticationService: FirebaseAuthService,
                private formBuilder: FormBuilder,
-               private router: Router) {
-                if (this.authenticationService.isLoggedIn) {
-                  this.router.navigate(['/profile']);
-                }
-               }
+               private router: Router) {}
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
@@ -31,7 +33,8 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-      acceptTerms: [false, Validators.requiredTrue]
+      type: [''],
+      especialidad: ['']
     }, {
         validator: MustMatch('password', 'confirmPassword')
       });
@@ -49,7 +52,13 @@ export class RegisterComponent implements OnInit {
     }
     this.isLoading = true;
     // form valido
-    this.authenticationService.SignUp(this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.name)
+    // tslint:disable-next-line: max-line-length
+    this.authenticationService.SignUp(this.registerForm.value.email,
+                                      this.registerForm.value.password,
+                                      this.registerForm.value.name,
+                                      'photourl',
+                                      this.registerForm.value.type,
+                                      this.registerForm.value.especialidad)
       .then((result) => {
         this.isLoading = false;
         this.onReset();
@@ -74,6 +83,32 @@ export class RegisterComponent implements OnInit {
       this.alertError.nativeElement.classList.remove('d-none');
     }
   }
+
+  getFileName(fileInput: Event) {
+    // tslint:disable-next-line: max-line-length
+    const file = (fileInput.target as HTMLInputElement).files[0];  // as = casting, tambien asi: (<HTMLInputElement>fileInput.target).files[0]
+    this.filename = file.name;
+  }
+
+  preview(files) {
+    if (files.length === 0) {
+      return;
+    }
+
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.message = 'Solo se pueden seleccionar imagenes.';
+      return;
+    }
+
+    const reader = new FileReader();
+    this.imagePath = files;
+    reader.readAsDataURL(files[0]);
+    reader.onload = (event) => {
+      this.imgURL = reader.result;
+    };
+  }
+
 }
 
 // custom validator to check that two fields match

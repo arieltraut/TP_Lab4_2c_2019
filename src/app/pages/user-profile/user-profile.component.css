@@ -1,0 +1,16 @@
+.bg-gradient-primary {
+  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+}
+
+.pb-8, .py-8 {
+  padding-bottom: 8rem !important;
+}
+.pt-5, .py-5 {
+  padding-top: 5rem !important; /* padding header*/
+}
+
+.img-thumbnail {
+  width: 128px;
+  height: 128px;
+  font-size: 0.875rem;
+}
