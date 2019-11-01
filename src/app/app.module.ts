@@ -3,8 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-
-
+import { FileSelectDirective } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -39,6 +38,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { FirebaseBdService } from './services/firebase-bd.service';
 import { AdminAltasComponent } from './pages/admin-altas/admin-altas.component';
+import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 
 
 
@@ -54,7 +54,9 @@ import { AdminAltasComponent } from './pages/admin-altas/admin-altas.component';
     UserProfileComponent,
     SidebarComponent,
     FooterComponent,
-    AdminAltasComponent
+    AdminAltasComponent,
+    FileUploaderComponent,
+    FileSelectDirective
   ],
   imports: [
     BrowserModule,
