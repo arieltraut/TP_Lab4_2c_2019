@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
-import { FileSelectDirective } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 
 const firebaseConfig = {
@@ -31,12 +31,12 @@ const firebaseConfig = {
 import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FirebaseAuthService } from './services/firebase-auth.service';
+import { FirebaseBdService } from './services/firebase-bd.service';
 import { RegisterComponent } from './components/register/register.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { FirebaseBdService } from './services/firebase-bd.service';
 import { AdminAltasComponent } from './pages/admin-altas/admin-altas.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 
@@ -55,19 +55,19 @@ import { FileUploaderComponent } from './components/file-uploader/file-uploader.
     SidebarComponent,
     FooterComponent,
     AdminAltasComponent,
-    FileUploaderComponent,
-    FileSelectDirective
+    FileUploaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularFirestoreModule,
-    AngularFireAuthModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireStorageModule, // imports firebase/storage only needed for storage features
     BrowserAnimationsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
   ],
   providers: [FirebaseAuthService,
               FirebaseBdService,

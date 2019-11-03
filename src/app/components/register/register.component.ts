@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
     }
     this.isLoading = true;
     // form valido
-    this.authenticationService.SignUp(this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.name)
+    this.authenticationService.SignUp(this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.name, false)
       .then((result) => {
         this.isLoading = false;
         this.onReset();

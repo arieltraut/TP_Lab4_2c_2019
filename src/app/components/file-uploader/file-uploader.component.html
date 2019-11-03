@@ -1,2 +1,1 @@
-<button type="button" (click)="this.uploadFile()" name="" id="" class="btn btn-primary" btn-lg btn-block>SUBIR</button>
-<input type="file" ng2FileSelect [uploader]="this.uploader"/>
+<input class="file-input" type="file" (change)="startUpload($event.target.files)">

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { Router } from '@angular/router';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-admin-altas',
@@ -18,12 +19,17 @@ export class AdminAltasComponent implements OnInit {
   submitted = false;
 
   especialidades: string[] = ['Cariologia', 'Ortodoncia', 'Implantologia', 'Radiologia'];
+
   filename = 'Elegir archivo';
   imagePath: any;
   imgURL: any;
   message: string;
 
+  selectedFile: File = null;
+  downloadURL: string;
+
   constructor( private authenticationService: FirebaseAuthService,
+               private storage: AngularFireStorage,
                private formBuilder: FormBuilder,
                private router: Router) {}
 
@@ -44,19 +50,24 @@ export class AdminAltasComponent implements OnInit {
   get f() { return this.registerForm.controls; }
 
   onRegistrar() {
-    this.submitted = true;
+
+    // this.submitted = true;
 
     // si es invalido nada
-    if (this.registerForm.invalid) {
+    /* if (this.registerForm.invalid) {
       return;
-    }
-    this.isLoading = true;
+    }*/
+
+    // this.isLoading = true;
+
+
     // form valido
     // tslint:disable-next-line: max-line-length
     this.authenticationService.SignUp(this.registerForm.value.email,
                                       this.registerForm.value.password,
                                       this.registerForm.value.name,
-                                      'photourl',
+                                      true,
+                                      this.downloadURL,
                                       this.registerForm.value.type,
                                       this.registerForm.value.especialidad)
       .then((result) => {
@@ -101,6 +112,8 @@ export class AdminAltasComponent implements OnInit {
       return;
     }
 
+    this.selectedFile = files[0]; // guarda archivo para subirlo en startUpload()
+
     const reader = new FileReader();
     this.imagePath = files;
     reader.readAsDataURL(files[0]);
@@ -109,7 +122,65 @@ export class AdminAltasComponent implements OnInit {
     };
   }
 
+
+  startUpload() { // (event: FileList)
+
+    this.submitted = true;
+
+    // si el form es invalido nada
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+    this.isLoading = true;
+
+    // The File object
+    const file = this.selectedFile; // event.item(0);
+
+    // Client-side validation example
+    if (file.type.split('/')[0] !== 'image') {
+      console.error('unsupported file type :( ');
+      return;
+    }
+
+    // The storage ref
+    const storageRef = this.storage.ref('images/' + file.name);
+
+    // Create file metadata including the content type
+    const metadata = {
+      contentType: 'image/jpeg',
+    };
+
+    // Upload the file and metadata
+    const uploadTask = storageRef.put(file, metadata);
+
+    uploadTask.task.on('state_changed', (snapshot) => {
+      // Observe state change events such as progress, pause, and resume
+      // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+
+    }, (error) => {
+      // Handle unsuccessful uploads
+
+    }, () => {
+      // Handle successful uploads on complete
+      // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+       uploadTask.task.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        console.log('File available at', downloadURL);
+        this.downloadURL = downloadURL;
+        console.log(this.downloadURL);
+        // this.db.collection('photos').add( { downloadURL });
+
+        this.onRegistrar();
+
+      });
+    });
+  }
+
+
 }
+
 
 // custom validator to check that two fields match
 export function MustMatch(controlName: string, matchingControlName: string) {

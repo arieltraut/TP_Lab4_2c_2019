@@ -47,14 +47,16 @@ export class FirebaseAuthService {
   }
 
   // Sign up with email/password
-  SignUp(email, password, name, photoURL?, type?, especialidad?) {
+  SignUp(email, password, name, esAdmin, photoURL?, type?, especialidad?) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign
         up and returns promise */
         // this.SendVerificationMail();
         this.SetUserData(result.user, name, photoURL, type, especialidad);
-        this.router.navigate(['/login']);
+        if (!esAdmin) {
+          this.router.navigate(['/login']);
+        }
       }).catch((error) => {
         window.alert(error.message);
       });
