@@ -64,7 +64,7 @@
                   <i class="ni education_hat mr-2"></i>{{this.registerForm.value.email? this.registerForm.value.email : 'jesee@example.com'}}
                 </div>
                 <hr class="my-4" />
-                <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
+                <p>Lorem ipsum — dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
                 <a href="javascript:void(0)">Show more</a>
               </div>
             </div>
@@ -84,7 +84,7 @@
         <div class="card-body">
           <!-- Alert OK-->
           <div #alertOk class="alert alert-dark d-none" role="alert">
-              Te registrate con éxito! <a routerLink="/login" class="alert-link">Incia sesión</a>
+              Haz registrado a un usuario con éxito! <!-- <a routerLink="/login" class="alert-link">Incia sesión</a> -->
             </div>
             <!-- Alert ERROR-->
             <div #alertError class="alert alert-dang`er d-none" role="alert">
@@ -156,6 +156,10 @@
                       <option>Recepcionista</option>
                       <option>Especialista</option>
                     </select>
+                    <div *ngIf="submitted && !!f.type.errors" class="invalid-feedback">
+                      <div *ngIf="!!f.type.errors.required">Debe ingresar tipo</div>
+                      <div *ngIf="!!f.type.errors.type">name debe ser valido</div>
+                    </div>
                   </div>
                 </div>
                 <div *ngIf="(this.registerForm.value.type == 'Especialista')" class="col-md-6">
@@ -184,6 +188,11 @@
             <div class="pl-lg-4">
               <div class="form-group text-center">
                   <button *ngIf="!isLoading" type="submit" class="btn btn-registro btn-primary">Registrar Usuario</button>
+                  <div *ngIf="isLoading" class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
               </div>
             </div>
           </form>

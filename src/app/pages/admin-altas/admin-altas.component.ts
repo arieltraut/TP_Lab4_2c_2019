@@ -39,8 +39,8 @@ export class AdminAltasComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-      type: [''],
-      especialidad: ['']
+      type: ['', Validators.required],
+      especialidad: ['', Validators.required]
     }, {
         validator: MustMatch('password', 'confirmPassword')
       });
@@ -62,6 +62,10 @@ export class AdminAltasComponent implements OnInit {
 
 
     // form valido
+    if (this.registerForm.value.type != 'Especialista') {
+      console.log(this.registerForm.value.type);
+      this.registerForm.controls['especialidad'].setValue('Ninguna'); }
+
     // tslint:disable-next-line: max-line-length
     this.authenticationService.SignUp(this.registerForm.value.email,
                                       this.registerForm.value.password,
@@ -169,7 +173,6 @@ export class AdminAltasComponent implements OnInit {
        uploadTask.task.snapshot.ref.getDownloadURL().then((downloadURL) => {
         console.log('File available at', downloadURL);
         this.downloadURL = downloadURL;
-        console.log(this.downloadURL);
         // this.db.collection('photos').add( { downloadURL });
 
         this.onRegistrar();
@@ -201,3 +204,5 @@ export function MustMatch(controlName: string, matchingControlName: string) {
     }
   };
 }
+
+
