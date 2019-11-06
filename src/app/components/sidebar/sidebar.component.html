@@ -98,15 +98,15 @@
                   <i class="fas fa-user-alt"></i>
                   <span>My profile</span>
                 </a>
-                <a href="./examples/profile.html" class="dropdown-item">
+                <a [routerLink]="['/profile']" class="dropdown-item">
                   <i class="fas fa-cog"></i>
                   <span>Settings</span>
                 </a>
-                <a href="./examples/profile.html" class="dropdown-item">
+                <a [routerLink]="['/profile']" class="dropdown-item">
                   <i class="fa fa-book fa-fw"></i>
                   <span>Activity</span>
                 </a>
-                <a href="./examples/profile.html" class="dropdown-item">
+                <a [routerLink]="['/profile']" class="dropdown-item">
                   <i class="fa fa-book fa-fw"></i>
                   <span>Support</span>
                 </a>
@@ -154,12 +154,12 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="../examples/icons.html">
+              <a class="nav-link active" [routerLink]="['']">
                 <i class="fas fa-first-aid"></i> Especialidades
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="../examples/maps.html">
+              <a class="nav-link active" [routerLink]="['']">
                 <i class="far fa-calendar-check"></i> Turnos
               </a>
             </li>
@@ -168,40 +168,25 @@
                 <i class="fas fa-user-alt"></i> Altas
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link  " href="../examples/tables.html">
-                <i class="fas fa-table"></i> Bla
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../examples/login.html">
-                <i class="fas fa-sign-in-alt"></i> Bla
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="../examples/register.html">
-                <i class="fas fa-sign-in-alt"></i> Bla
-              </a>
-            </li>
           </ul>
           <!-- Divider -->
           <hr class="my-3">
           <!-- Heading -->
-          <h6 class="navbar-heading text-muted">Documentation</h6>
+          <h6 class="navbar-heading text-muted">Documentacion</h6>
           <!-- Navigation -->
           <ul class="navbar-nav mb-md-3 flex-md-column">
             <li class="nav-item">
-              <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
+              <a class="nav-link" [routerLink]="['']">
                 <i class="fas fa-rocket"></i> Getting started
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
+              <a class="nav-link" [routerLink]="['']">
                 <i class="fas fa-rocket"></i> Foundation
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
+              <a class="nav-link" [routerLink]="['']">
                 <i class="fas fa-rocket"></i> Components
               </a>
             </li>

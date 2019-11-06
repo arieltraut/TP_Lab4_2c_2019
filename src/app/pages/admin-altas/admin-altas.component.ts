@@ -62,9 +62,7 @@ export class AdminAltasComponent implements OnInit {
 
 
     // form valido
-    if (this.registerForm.value.type != 'Especialista') {
-      console.log(this.registerForm.value.type);
-      this.registerForm.controls['especialidad'].setValue('Ninguna'); }
+
 
     // tslint:disable-next-line: max-line-length
     this.authenticationService.SignUp(this.registerForm.value.email,
@@ -130,6 +128,9 @@ export class AdminAltasComponent implements OnInit {
   startUpload() { // (event: FileList)
 
     this.submitted = true;
+
+    if (this.registerForm.value.type != 'Especialista') {
+      this.registerForm.controls['especialidad'].setValue('Ninguna'); }
 
     // si el form es invalido nada
     if (this.registerForm.invalid) {
