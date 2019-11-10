@@ -86,7 +86,7 @@
             <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <div class="media align-items-center">
                 <span class="avatar avatar-sm rounded-circle">
-                  <img alt="Image placeholder" src="{{usuario.photoURL}}">
+                  <img alt="Image placeholder" class="rounded-circle" src="{{usuario.photoURL}}">
                 </span>
               </div>
             </a>
@@ -149,25 +149,12 @@
           </form>
           <!-- Navigation -->
           <ul class="navbar-nav flex-md-column">
-            <li class="nav-item">
-              <a class="nav-link" [routerLink]="['']"> <i class="fas fa-home"></i> Inicio
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" [routerLink]="['']">
-                <i class="fas fa-first-aid"></i> Especialidades
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" [routerLink]="['']">
-                <i class="far fa-calendar-check"></i> Turnos
-              </a>
-            </li>
-            <li class="active nav-item">
-              <a class="nav-link active" [routerLink]="['/altas']">
-                <i class="fas fa-user-alt"></i> Altas
-              </a>
-            </li>
+              <li *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
+                  <a routerLinkActive="active" [routerLink]="[menuItem.path]" class="nav-link">
+                      <i class="ni {{menuItem.icon}}"></i>
+                      {{menuItem.title}}
+                  </a>
+              </li>
           </ul>
           <!-- Divider -->
           <hr class="my-3">

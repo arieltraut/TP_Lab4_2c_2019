@@ -207,6 +207,9 @@ button, input, select, textarea {
 }
 .rounded-circle {
   border-radius: 50% !important;
+  width:180px;
+  height:180px;
+  object-fit:cover;
 }
 .card-profile-stats {
   padding: 1rem 0;

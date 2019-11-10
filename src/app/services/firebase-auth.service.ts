@@ -5,6 +5,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Router } from '@angular/router';
 import { User } from '../classes/user';
 import { getAttrsForDirectiveMatching } from '@angular/compiler/src/render3/view/util';
+import { FirebaseBdService } from './firebase-bd.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class FirebaseAuthService {
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
+    public bdService: FirebaseBdService,
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning
@@ -26,6 +28,15 @@ export class FirebaseAuthService {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user'));
+
+        // guardando en localstorge de la coleccion user
+        this.bdService.GetUser('users', user)
+        .then(result => {
+          console.log(result);
+          localStorage.setItem('user-bd', JSON.stringify(result));
+          JSON.parse(localStorage.getItem('user-bd'));
+        });
+
       } else {
         localStorage.setItem('user', null);
         JSON.parse(localStorage.getItem('user'));
@@ -95,7 +106,7 @@ export class FirebaseAuthService {
       displayName: name,
       photoURL: photo,
       type: (type) ? type : 'cliente',
-      especialidad: especial
+      especialidad: (especial) ? especial : 'ninguna'
       // emailVerified: user.emailVerified
     };
     return userRef.set(userData, {

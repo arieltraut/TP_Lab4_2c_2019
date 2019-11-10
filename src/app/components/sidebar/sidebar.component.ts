@@ -1,10 +1,23 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseBdService } from 'src/app/services/firebase-bd.service';
-import { User } from 'firebase';
+import { User } from 'src/app/classes/user';
+import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 
-
+declare interface RouteInfo {
+  path: string;
+  title: string;
+  icon: string;
+  class: string;
+  type: string;
+}
+export const ROUTES: RouteInfo[] = [
+  { path: '/profile', title: 'Inicio',  icon: 'fas fa-home', class: '', type: 'all' },
+  { path: '/especialidades', title: 'Especialidades',  icon: 'fas fa-first-aid', class: '', type: 'Admin' },
+  { path: '/turnos', title: 'Turnos',  icon: 'far fa-calendar-check', class: '', type: 'all' },
+  { path: '/empleados', title: 'Empleados',  icon: 'fas fa-user-alt', class: '', type: 'Admin' },
+  { path: '/altas', title: 'Altas',  icon: 'fas fa-user-plus', class: '', type: 'Admin' }
+];
 
 @Component({
   selector: 'app-sidebar',
@@ -17,20 +30,17 @@ export class SidebarComponent implements OnInit {
     public authService: FirebaseAuthService,
     public bdService: FirebaseBdService,
     public router: Router,
-    public ngZone: NgZone
   ) { }
 
   public usuario: User;
+  public menuItems: any[];
+
 
 
   ngOnInit() {
-    this.usuario = JSON.parse(localStorage.getItem('user'));
+    this.usuario = JSON.parse(localStorage.getItem('user-bd'));
     // console.log('Este es el log:' + this.usuario.uid);
-    this.bdService.GetUser2('users', this.usuario)
-    .then(result => {
-      console.log(result);
-      this.usuario = result;
-    });
+    this.menuItems = ROUTES.filter(menuItem => menuItem.type === this.usuario.type || menuItem.type === 'all' );
   }
 
 }

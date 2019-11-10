@@ -39,6 +39,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AdminAltasComponent } from './pages/admin-altas/admin-altas.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
+import { AdminEmpleadosComponent } from './pages/admin-empleados/admin-empleados.component';
 
 
 
@@ -55,7 +56,8 @@ import { FileUploaderComponent } from './components/file-uploader/file-uploader.
     SidebarComponent,
     FooterComponent,
     AdminAltasComponent,
-    FileUploaderComponent
+    FileUploaderComponent,
+    AdminEmpleadosComponent
   ],
   imports: [
     BrowserModule,

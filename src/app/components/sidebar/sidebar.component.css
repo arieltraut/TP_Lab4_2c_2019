@@ -28,6 +28,22 @@
 .navbar-vertical .navbar-nav .nav-link.active {
   position: relative;
 }
+/*icon-colors*/
+.fa-home:before {
+  color: #5e72e4;
+}
+.fa-user-alt {
+  color: #ffd600;
+}
+.fa-user-plus {
+  color: #fb6340;
+}
+.fa-calendar-check {
+  color: #11cdef;
+}
+.fa-first-aid {
+  color: #f3a4b5 ;
+}
 
 /*******divider**************/
 @media (min-width: 768px){
@@ -78,6 +94,13 @@ hr {
   width: 36px;
   height: 36px;
   font-size: 0.875rem;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+  height: 36px;
+  width: 36px;
+  object-fit:cover;
 }
 
 @media (min-width: 768px){

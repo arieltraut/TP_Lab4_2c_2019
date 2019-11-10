@@ -86,7 +86,10 @@ export class AdminAltasComponent implements OnInit {
 
   onReset() {
     this.submitted = false;
+    this.filename = 'Elegir archivo';
+    this.imgURL = null;
     this.registerForm.reset();
+
   }
 
   mostrarAlert(bool: boolean) {

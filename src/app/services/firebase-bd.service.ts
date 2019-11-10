@@ -17,15 +17,15 @@ export class FirebaseBdService {
     });
   }
 
-  GetUser(collection, usuario) {
-    return new Promise<any>((resolve, reject) => {
-      this.afs.collection(`${collection}/${usuario.uid}`).valueChanges().subscribe(snapshots => {
-        resolve(snapshots);
-      });
-    });
-  }
+  // GetUser(collection, usuario) { (Mariano)
+  //   return new Promise<any>((resolve, reject) => {
+  //     this.afs.collection(`${collection}/${usuario.uid}`).valueChanges().subscribe(snapshots => {
+  //       resolve(snapshots);
+  //     });
+  //   });
+  // }
 
-  GetUser2(collection, usuario) {
+  GetUser(collection, usuario) {
     return new Promise<any>((resolve, reject) => {
       this.afs.collection(`${collection}`).doc(`${usuario.uid}`).valueChanges().subscribe(snapshots => {
         resolve(snapshots);

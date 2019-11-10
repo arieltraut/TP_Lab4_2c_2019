@@ -6,6 +6,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { AdminAltasComponent } from './pages/admin-altas/admin-altas.component';
+import { AdminEmpleadosComponent } from './pages/admin-empleados/admin-empleados.component';
 
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
       children: [
         {path: 'profile' , component: UserProfileComponent},
         {path: 'altas' , component: AdminAltasComponent},
+        {path: 'empleados' , component: AdminEmpleadosComponent}
       ]
     }
 ];

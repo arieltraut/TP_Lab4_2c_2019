@@ -37,6 +37,12 @@ background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
   font-size: 0.875rem;
 }
 
+.rounded-circle {
+  border-radius: 50% !important;
+  height: 36px;
+  width: 36px;
+  object-fit:cover;
+}
 /**********dropdown****************/
 /***********dropdown*/
 
