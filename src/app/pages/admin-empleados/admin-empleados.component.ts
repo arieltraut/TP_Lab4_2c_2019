@@ -18,7 +18,7 @@ export class AdminEmpleadosComponent implements OnInit {
   }
 
 
-  private Borrar(empleado?: any) {
+  public Borrar(empleado?: any) {
     // this.peliculaServ.BorrarUno(this.idPelicula)
     // .subscribe( () => {
     //   this.borrado.emit(this.idPelicula);
