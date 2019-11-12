@@ -10,6 +10,7 @@ import { FirebaseBdService } from 'src/app/services/firebase-bd.service';
 export class AdminEmpleadosComponent implements OnInit {
   isLoading = false;
   listadoEmpleados: Array<User>;
+  logs;
 
   constructor(public bd: FirebaseBdService) { }
 
@@ -37,7 +38,17 @@ export class AdminEmpleadosComponent implements OnInit {
         this.isLoading = false;
         console.log(result);
         this.listadoEmpleados = result.filter(user => user.type.toUpperCase() === 'Recepcionista'.toUpperCase() ||
-           user.type.toUpperCase() === 'Especialista'.toUpperCase());;
+           user.type.toUpperCase() === 'Especialista'.toUpperCase());
+      });
+  }
+
+  obtenerLogs(usuario) {
+    this.isLoading = true;
+    this.bd.GetLogs(usuario)
+      .then(result => {
+        this.isLoading = false;
+        console.log(result);
+        this.logs = result.map(log => log.createdAt.toDate());
       });
   }
 

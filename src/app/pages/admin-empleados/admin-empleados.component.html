@@ -109,8 +109,8 @@
                     <th scope="col">Nombre</th>
                     <th scope="col">Perfil</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Users</th>
-                    <th scope="col">Completion</th>
+                    <th scope="col">Ultimo login</th>
+                    <th scope="col">Ultimo Turno</th>
                     <th scope="col"></th>
                   </tr>
                 </thead>
@@ -136,7 +136,7 @@
                     </td>
                     <td>
                       <div class="avatar-group">
-
+                        <a href="" data-toggle="modal" data-target="#exampleModalScrollable" (click)='obtenerLogs(empleado)'><span class="mb-0 text-sm">{{empleado.lastLoginAt}}</span></a>
                       </div>
                     </td>
                     <td>
@@ -195,6 +195,31 @@
                 </ul>
               </nav>
             </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalScrollableTitle">Logs</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <ul *ngFor="let log of logs">
+                        <li>{{log}}</li>
+                      </ul>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
           </div>
         </div>
       </div>

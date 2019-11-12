@@ -48,6 +48,8 @@ export class FirebaseAuthService {
   SignIn(email, password) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((result) => {
+        // console.log('el result es: ' + result.user);
+        this.bdService.AddLog(result.user);
         this.ngZone.run(() => {
           this.router.navigate(['profile']);
         });
@@ -103,6 +105,7 @@ export class FirebaseAuthService {
       email: user.email,
       // name: user.email.split('@')[0],
       // createdAt: date.toLocaleDateString(),
+      lastLoginAt: date.toLocaleDateString(),
       displayName: name,
       photoURL: photo,
       type: (type) ? type : 'cliente',

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { FirebaseBdService } from 'src/app/services/firebase-bd.service';
 
 @Component({
   selector: 'app-admin-altas',
@@ -18,7 +19,8 @@ export class AdminAltasComponent implements OnInit {
   registerForm: FormGroup;
   submitted = false;
 
-  especialidades: string[] = ['Cariologia', 'Ortodoncia', 'Implantologia', 'Radiologia'];
+  // especialidades: string[] = ['Cariologia', 'Ortodoncia', 'Implantologia', 'Radiologia'];
+  especialidades: any[];
 
   filename = 'Elegir archivo';
   imagePath: any;
@@ -29,11 +31,15 @@ export class AdminAltasComponent implements OnInit {
   downloadURL: string;
 
   constructor( private authenticationService: FirebaseAuthService,
+               private bd: FirebaseBdService,
                private storage: AngularFireStorage,
                private formBuilder: FormBuilder,
                private router: Router) {}
 
   ngOnInit() {
+
+    this.obtenerEspecialidades();
+
     this.registerForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
@@ -48,6 +54,7 @@ export class AdminAltasComponent implements OnInit {
 
   // para acceder facilmente a los controles del form
   get f() { return this.registerForm.controls; }
+
 
   onRegistrar() {
 
@@ -84,12 +91,19 @@ export class AdminAltasComponent implements OnInit {
       });
   }
 
+  obtenerEspecialidades() {
+    this.bd.GetEspecialidades()
+      .then(result => {
+        console.log(result);
+        this.especialidades = result.map(esp => esp.name);
+      });
+  }
+
   onReset() {
     this.submitted = false;
     this.filename = 'Elegir archivo';
     this.imgURL = null;
     this.registerForm.reset();
-
   }
 
   mostrarAlert(bool: boolean) {
@@ -132,7 +146,7 @@ export class AdminAltasComponent implements OnInit {
 
     this.submitted = true;
 
-    if (this.registerForm.value.type != 'Especialista') {
+    if (this.registerForm.value.type !== 'Especialista') {
       this.registerForm.controls['especialidad'].setValue('Ninguna'); }
 
     // si el form es invalido nada

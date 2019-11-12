@@ -5,6 +5,7 @@ export class User {
   photoURL: string;
   type: string;
   especialidad: string;
+  lastLoginAt: string;
   // emailVerified: boolean;
 }
 
