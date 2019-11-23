@@ -6,13 +6,14 @@ import { Router } from '@angular/router';
 import { User } from '../classes/user';
 import { getAttrsForDirectiveMatching } from '@angular/compiler/src/render3/view/util';
 import { FirebaseBdService } from './firebase-bd.service';
+import {first} from 'rxjs/operators';
+import { resolve } from 'url';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class FirebaseAuthService {
-  userData: any; // Save logged in user data
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
@@ -23,19 +24,20 @@ export class FirebaseAuthService {
   ) {
     /* Saving user data in localstorage when
     logged in and setting up null when logged out */
+
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
+        localStorage.setItem('user', JSON.stringify(user));
         JSON.parse(localStorage.getItem('user'));
 
         // guardando en localstorge de la coleccion user
-        this.bdService.GetUser('users', user)
-        .then(result => {
-          console.log(result);
-          localStorage.setItem('user-bd', JSON.stringify(result));
-          JSON.parse(localStorage.getItem('user-bd'));
-        });
+        // this.bdService.GetUser('users', user)
+        // .then(result => {
+        //   console.log(result);
+        //   localStorage.setItem('user-bd', JSON.stringify(result));
+        //   JSON.parse(localStorage.getItem('user-bd'));
+        // });
+        this.guardarEnBd(user);
 
       } else {
         localStorage.setItem('user', null);
@@ -49,11 +51,11 @@ export class FirebaseAuthService {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((result) => {
         // console.log('el result es: ' + result.user);
+
+        // this.guardarEnBd(result.user);
+
         this.bdService.AddLog(result.user);
-        this.ngZone.run(() => {
-          this.router.navigate(['profile']);
-        });
-        // this.SetUserData(result.user);
+
       }).catch((error) => {
         window.alert(error.message);
       });
@@ -63,12 +65,10 @@ export class FirebaseAuthService {
   SignUp(email, password, name, esAdmin, photoURL?, type?, especialidad?) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign
-        up and returns promise */
-        // this.SendVerificationMail();
+
         this.SetUserData(result.user, name, photoURL, type, especialidad);
         if (!esAdmin) {
-          this.router.navigate(['/login']);
+          // this.router.navigate(['/login']);
         }
       }).catch((error) => {
         window.alert(error.message);
@@ -78,21 +78,10 @@ export class FirebaseAuthService {
   // Returns true when user is looged in and email is verified
   get isLoggedIn(): boolean {
     const user = JSON.parse(localStorage.getItem('user'));
-    return (user !== null) ? true : false;
+    const userBd = JSON.parse(localStorage.getItem('user-bd'));
+    return (user !== null && userBd !== null) ? true : false;
   }
 
-  // Auth logic to run auth providers
-  AuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-    .then((result) => {
-       this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
-        });
-       // this.SetUserData(result.user);
-    }).catch((error) => {
-      window.alert(error);
-    });
-  }
 
   /* Setting up user data when sign in with username/password,
   sign up with username/password and sign in with social auth
@@ -121,8 +110,23 @@ export class FirebaseAuthService {
   SignOut() {
     return this.afAuth.auth.signOut().then(() => {
       localStorage.removeItem('user');
+      localStorage.removeItem('user-bd');
       this.router.navigate(['login']);
     });
   }
+
+
+
+  guardarEnBd(user) {
+          // guardando en localstorge de la coleccion user
+    this.bdService.GetUser('users', user)
+          .then(result => {
+            console.log(result);
+            localStorage.setItem('user-bd', JSON.stringify(result));
+            JSON.parse(localStorage.getItem('user-bd'));
+            this.router.navigate(['profile']);
+          });
+  }
+
 
 }

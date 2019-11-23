@@ -40,6 +40,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AdminAltasComponent } from './pages/admin-altas/admin-altas.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { AdminEmpleadosComponent } from './pages/admin-empleados/admin-empleados.component';
+import { AdminEspecialidadesComponent } from './pages/admin-especialidades/admin-especialidades.component';
 
 
 
@@ -57,7 +58,8 @@ import { AdminEmpleadosComponent } from './pages/admin-empleados/admin-empleados
     FooterComponent,
     AdminAltasComponent,
     FileUploaderComponent,
-    AdminEmpleadosComponent
+    AdminEmpleadosComponent,
+    AdminEspecialidadesComponent
   ],
   imports: [
     BrowserModule,

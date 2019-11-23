@@ -82,6 +82,12 @@
                   <p>No tienes una cuenta? <a routerLink="/register" class="font-italic text-muted">
                       <u>Crear</u></a></p>
                 </div>
+                <div class="text-center d-flex justify-content-between mt-4">
+                  <a (click)="MockLogin('administrador')"><span class="btn btn-dark btn-block ">Admin</span></a>
+                  <a (click)="MockLogin('recepcionista')"><span class="btn btn-dark btn-block">Recepcionista</span></a>
+                  <a (click)="MockLogin('especialista')"><span class="btn btn-dark btn-block">Especialista</span></a>
+                  <a (click)="MockLogin('cliente')"><span class="btn btn-dark btn-block">Cliente</span></a>
+                </div>
               </form>
             </div>
           </div>

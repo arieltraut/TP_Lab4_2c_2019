@@ -37,4 +37,26 @@ export class LoginComponent implements OnInit {
     this.alertError.nativeElement.classList.remove('d-none');
   }
 
+
+  MockLogin(perfil: string) {
+
+    switch (perfil) {
+      case 'administrador':
+        this.onLogin('arieltraut@gmail.com', 'arieltraut');
+        break;
+      case 'cliente':
+        this.onLogin('fernando@gmail.com', 'fernando');
+        break;
+      case 'especialista':
+        this.onLogin('tywin@gmail.com', 'password');
+        break;
+      case 'recepcionista':
+        this.onLogin('jaimelannister@gmail.com', 'password');
+        break;
+      default:
+        this.onLogin('arieltraut@gmail.com', 'arieltraut');
+        break;
+    }
+  }
+
 }

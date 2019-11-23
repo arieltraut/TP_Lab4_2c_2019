@@ -21,6 +21,13 @@ export class FirebaseBdService {
     });
   }
 
+  TraerUsuarios() {
+    return this.afs.collection<any>('users').valueChanges();
+  }
+
+
+
+
   // GetUser(collection, usuario) { (Mariano)
   //   return new Promise<any>((resolve, reject) => {
   //     this.afs.collection(`${collection}/${usuario.uid}`).valueChanges().subscribe(snapshots => {

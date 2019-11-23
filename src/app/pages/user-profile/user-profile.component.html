@@ -108,7 +108,7 @@
           <h1 class="h2">User Profile</h1>
         </div>
         <!-- Show user data when logged in -->
-        <div class="row" *ngIf="authService.userData as user">
+        <div class="row" *ngIf="this.usuario as user">
           <div class="col-md-12">
             <div class="media">
               <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(usuario.photoURL) ? usuario.photoURL : 'assets/dummy-user.png'}}"
@@ -121,7 +121,7 @@
             </div>
           </div>
         </div>
-        <div class="row" *ngIf="authService.userData as user">
+        <div class="row" *ngIf="this.usuario as user">
           <div class="col-md-12" style="margin-top: 30px;">
             <h4 >Main</h4>
             <p>Sriracha biodiesel taxidermy organic post-ironic, Intelligentsia salvia mustache 90's code editing brunch. Butcher polaroid VHS art party, hashtag Brooklyn deep v PBR narwhal sustainable mixtape swag wolf squid tote bag. Tote bag cronut semiotics,

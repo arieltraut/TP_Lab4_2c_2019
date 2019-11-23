@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/classes/user';
 import { FirebaseBdService } from 'src/app/services/firebase-bd.service';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-admin-empleados',
@@ -12,11 +14,16 @@ export class AdminEmpleadosComponent implements OnInit {
   listadoEmpleados: Array<User>;
   logs;
 
-  constructor(public bd: FirebaseBdService) { }
+  listadoDeUsuarios: Observable<any[]>;
+
+
+  constructor(public bd: FirebaseBdService ) { }
 
   ngOnInit() {
-    this.obtenerUsuarios();
+    // this.obtenerUsuarios();
+    this.ObtenerUsuarios2();
   }
+
 
 
   public Borrar(empleado?: any) {
@@ -28,6 +35,15 @@ export class AdminEmpleadosComponent implements OnInit {
   }
 
 
+
+
+  ObtenerUsuarios2() {
+    this.listadoDeUsuarios = this.bd.TraerUsuarios();
+    this.listadoDeUsuarios.subscribe(x => {
+      this.listadoEmpleados = x.filter(user => user.type.toUpperCase() === 'Recepcionista'.toUpperCase() ||
+      user.type.toUpperCase() === 'Especialista'.toUpperCase());
+    });
+  }
 
 
 
