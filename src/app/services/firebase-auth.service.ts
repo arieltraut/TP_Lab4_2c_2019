@@ -119,7 +119,7 @@ export class FirebaseAuthService {
 
   guardarEnBd(user) {
           // guardando en localstorge de la coleccion user
-    this.bdService.GetUser('users', user)
+    this.bdService.TraerUno('users', user)
           .then(result => {
             console.log(result);
             localStorage.setItem('user-bd', JSON.stringify(result));

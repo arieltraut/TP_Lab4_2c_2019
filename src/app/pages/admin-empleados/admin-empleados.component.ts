@@ -38,7 +38,7 @@ export class AdminEmpleadosComponent implements OnInit {
 
 
   ObtenerUsuarios2() {
-    this.listadoDeUsuarios = this.bd.TraerUsuarios();
+    this.listadoDeUsuarios = this.bd.TraerTodos('users');
     this.listadoDeUsuarios.subscribe(x => {
       this.listadoEmpleados = x.filter(user => user.type.toUpperCase() === 'Recepcionista'.toUpperCase() ||
       user.type.toUpperCase() === 'Especialista'.toUpperCase());
@@ -49,7 +49,7 @@ export class AdminEmpleadosComponent implements OnInit {
 
   obtenerUsuarios() {
     this.isLoading = true;
-    this.bd.GetUsers()
+    this.bd.TraerTodos2('user')
       .then(result => {
         this.isLoading = false;
         console.log(result);

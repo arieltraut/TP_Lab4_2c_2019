@@ -2,6 +2,8 @@
   padding-right: 30px;
   padding-left: 30px;
   position: relative;
+  min-height: 530px;
+  background-size: cover; background-position: center top;
 }
 .pb-8, .py-8 {
   padding-bottom: 8rem !important;

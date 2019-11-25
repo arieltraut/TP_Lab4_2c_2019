@@ -10,23 +10,15 @@ import 'firebase/firestore';
 })
 export class FirebaseBdService {
 
-  constructor(private afs: AngularFirestore ) { }
+  constructor(private afs: AngularFirestore,
+              private firestore: AngularFirestore ) { }
 
 
-  GetUsers() {
-    return new Promise<any>((resolve, reject) => {
-      this.afs.collection('/users').valueChanges().subscribe(snapshots => {
-        resolve(snapshots);
-      });
-    });
+
+
+  TraerTodos(collection) {
+    return this.afs.collection<any>(collection).valueChanges();
   }
-
-  TraerUsuarios() {
-    return this.afs.collection<any>('users').valueChanges();
-  }
-
-
-
 
   // GetUser(collection, usuario) { (Mariano)
   //   return new Promise<any>((resolve, reject) => {
@@ -36,13 +28,42 @@ export class FirebaseBdService {
   //   });
   // }
 
-  GetUser(collection, usuario) {
+
+  TraerTodos2(collection) {  // no trae a tiempo, reemplazada por traertodos
     return new Promise<any>((resolve, reject) => {
-      this.afs.collection(`${collection}`).doc(`${usuario.uid}`).valueChanges().subscribe(snapshots => {
+      this.afs.collection(collection).valueChanges().subscribe(snapshots => {
         resolve(snapshots);
       });
     });
   }
+
+  TraerUno(collection, obj) {
+    return new Promise<any>((resolve, reject) => {
+      this.afs.collection(`${collection}`).doc(`${obj.uid}`).valueChanges().subscribe(snapshots => {
+        resolve(snapshots);
+      });
+    });
+  }
+
+  AgregarUno(objeto: any, collection: string): void {
+    const id = this.firestore.createId();
+    objeto.id = id;
+    this.afs.collection(collection).doc(id).set(objeto);
+
+    // this.afs.collection(collection).add(objeto);
+    // .doc().set(objeto);
+  }
+
+  ModificarUno(objeto: any, collection: string): void {
+    const id = objeto.id;
+    const objetoDoc = this.afs.doc<any>(`${collection}/${id}`);
+    objetoDoc.update(objeto);
+}
+
+
+
+
+
 
   AddLog(usuario) { // ver tema timestamp
     const date = new Date();
@@ -57,15 +78,6 @@ export class FirebaseBdService {
   GetLogs(usuario) {
     return new Promise<any>((resolve, reject) => {
       this.afs.collection('/users').doc(`${usuario.uid}`).collection('/logs').valueChanges().subscribe(snapshots => {
-        resolve(snapshots);
-      });
-    });
-  }
-
-
-  GetEspecialidades() {
-    return new Promise<any>((resolve, reject) => {
-      this.afs.collection('/especialidades').valueChanges().subscribe(snapshots => {
         resolve(snapshots);
       });
     });

@@ -41,6 +41,8 @@ import { AdminAltasComponent } from './pages/admin-altas/admin-altas.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { AdminEmpleadosComponent } from './pages/admin-empleados/admin-empleados.component';
 import { AdminEspecialidadesComponent } from './pages/admin-especialidades/admin-especialidades.component';
+import { TurnosComponent } from './pages/turnos/turnos.component';
+import { EstadoTurnoDirective } from './directives/estado-turno.directive';
 
 
 
@@ -59,7 +61,9 @@ import { AdminEspecialidadesComponent } from './pages/admin-especialidades/admin
     AdminAltasComponent,
     FileUploaderComponent,
     AdminEmpleadosComponent,
-    AdminEspecialidadesComponent
+    AdminEspecialidadesComponent,
+    TurnosComponent,
+    EstadoTurnoDirective
   ],
   imports: [
     BrowserModule,

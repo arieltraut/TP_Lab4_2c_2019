@@ -67,9 +67,7 @@ export class AdminAltasComponent implements OnInit {
 
     // this.isLoading = true;
 
-
     // form valido
-
 
     // tslint:disable-next-line: max-line-length
     this.authenticationService.SignUp(this.registerForm.value.email,
@@ -92,9 +90,9 @@ export class AdminAltasComponent implements OnInit {
   }
 
   obtenerEspecialidades() {
-    this.bd.GetEspecialidades()
+    this.bd.TraerTodos2('especialidades')
       .then(result => {
-        console.log(result);
+        // console.log(result);
         this.especialidades = result.map(esp => esp.name);
       });
   }

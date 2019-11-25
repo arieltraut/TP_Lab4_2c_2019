@@ -7,6 +7,8 @@ import { RegisterComponent } from './components/register/register.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { AdminAltasComponent } from './pages/admin-altas/admin-altas.component';
 import { AdminEmpleadosComponent } from './pages/admin-empleados/admin-empleados.component';
+import { TurnosComponent } from './pages/turnos/turnos.component';
+import { AdminEspecialidadesComponent } from './pages/admin-especialidades/admin-especialidades.component';
 
 
 
@@ -23,7 +25,9 @@ const routes: Routes = [
       children: [
         {path: 'profile' , component: UserProfileComponent},
         {path: 'altas' , component: AdminAltasComponent},
-        {path: 'empleados' , component: AdminEmpleadosComponent}
+        {path: 'empleados' , component: AdminEmpleadosComponent},
+        {path: 'especialidades' , component: AdminEspecialidadesComponent},
+        {path: 'turnos' , component: TurnosComponent},
       ]
     }
 ];

@@ -1,4 +1,4 @@
-<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(assets/profile-cover.jpg); background-size: cover; background-position: center top;">
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="background-image: url(assets/profile-cover2.jpg)">
   <!-- Mask -->
   <span class="mask bg-gradient-danger opacity-8"></span>
   <!-- Header container -->
@@ -7,7 +7,6 @@
       <div class="col-lg-7 col-md-10">
         <h1 class="display-2 text-white">Alta Usuarios</h1>
         <p class="text-white mt-0 mb-5">Bienvenido a la pagina de altas. Desde aqui podras registrar empleados, especialistas o clientes, dependiendo el tipo de usuario tendran acceso a diferentes acciones.</p>
-        <a href="#!" class="btn btn-info">Edit profile</a>
       </div>
     </div>
   </div>
@@ -105,6 +104,7 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-email">Email</label>
@@ -117,6 +117,7 @@
                   </div>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
@@ -129,6 +130,7 @@
                     </div>
                   </div>
                 </div>
+
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-last-name">Repetir Contraseña</label>
@@ -142,6 +144,7 @@
                 </div>
               </div>
             </div>
+
             <hr class="my-4" />
             <!-- Address -->
             <h6 class="heading-small text-muted mb-4">Contact information</h6>
@@ -162,6 +165,7 @@
                     </div>
                   </div>
                 </div>
+
                 <div *ngIf="(this.registerForm.value.type == 'Especialista')" class="col-md-6">
                     <div class="form-group">
                       <label class="form-control-label" for="select-esp">Especialidad</label>
@@ -170,6 +174,7 @@
                       </select>
                     </div>
                   </div>
+
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="form-control-label" for="input-address">Imagen perfil</label>
@@ -182,6 +187,7 @@
                 </div>
               </div>
             </div>
+
             <!-- <hr class="my-4" /> -->
             <!-- Description -->
             <!-- <h6 class="heading-small text-muted mb-4">About me</h6> -->
