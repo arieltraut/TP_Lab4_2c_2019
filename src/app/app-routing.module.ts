@@ -9,6 +9,7 @@ import { AdminAltasComponent } from './pages/admin-altas/admin-altas.component';
 import { AdminEmpleadosComponent } from './pages/admin-empleados/admin-empleados.component';
 import { TurnosComponent } from './pages/turnos/turnos.component';
 import { AdminEspecialidadesComponent } from './pages/admin-especialidades/admin-especialidades.component';
+import { RecepcionComponent } from './pages/recepcion/recepcion.component';
 
 
 
@@ -28,6 +29,7 @@ const routes: Routes = [
         {path: 'empleados' , component: AdminEmpleadosComponent},
         {path: 'especialidades' , component: AdminEspecialidadesComponent},
         {path: 'turnos' , component: TurnosComponent},
+        {path: 'recepcion' , component: RecepcionComponent}
       ]
     }
 ];

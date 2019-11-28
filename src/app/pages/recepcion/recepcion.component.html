@@ -91,114 +91,68 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
-  <!-- Page content -->
-  <div class="container-fluid mt--7 contenedor">
-
-    <div class="row mt-5">
-      <div class="col-xl-8 mb-5 mb-xl-0">
-        <div class="card shadow">
-          <div class="card-header border-0">
-            <div class="row align-items-center">
-              <div class="col">
-                <h3 class="mb-0">Comentarios</h3>
-              </div>
-              <div class="col text-right">
-                <a href="#!" class="btn btn-sm btn-primary">See all</a>
-              </div>
-            </div>
-          </div>
-          <div class="table-responsive">
-            <!-- Projects table -->
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Especialidad</th>
-                  <th scope="col">Cliente</th>
-                  <th scope="col">Comentario</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let turno of mejoresYPeoresComentarios">
-                  <th scope="row">
-                      {{turno.Especialidad}}
-                  </th>
-                  <td>
-                      <span class="fuenteTabla text-sm">{{turno.NombreCliente}}</span>
-                  </td>
-                  <td>
-                    <span class="fuenteTabla text-sm"><i class="mr-3" [ngClass]="{'fa fa-arrow-up pendiente': turno.Encuesta.PuntuacionEspecialista == this.maxValue,
-                       'fas fa-arrow-down cancel': turno.Encuesta.PuntuacionEspecialista == this.minValue }"></i> {{turno.Encuesta.Opinion}} </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+<!-- Page content -->
+<div class="container-fluid mt--7 contenedor">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Empleados</h3>
         </div>
-      </div>
-      <div class="col-xl-4">
-        <div class="card shadow">
-          <div class="card-header border-0">
-            <div class="row align-items-right">
-              <div class="col">
-                <h3 class="mb-0">Mas usada</h3>
-              </div>
-              <div class="col text-right">
-              </div>
-            </div>
-          </div>
-          <div class="table-responsive">
-            <!-- Projects table -->
-            <table class="table align-items-center table-flush">
-              <thead class="thead-light">
-                <tr>
-                    <th scope="col">Especialidad</th>
-                    <th scope="col">Cantidad de usos</th>
-                </tr>
-              </thead>
-              <tbody class="tableAlta">
-                <tr>
-                    <th scope="row">
-                        {{this.masUsada}}
-                      </th>
-                      <td>
-                        {{this.masPuntaje}}
-                      </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="card shadow menosUsada">
-                <div class="card-header border-0">
-                  <div class="row align-items-right">
-                    <div class="col">
-                      <h3 class="mb-0">Menos Usada</h3>
-                    </div>
-                    <div class="col text-right">
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Piso</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Especialista actual</th>
+                <th scope="col">Paciente actual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let consultorio of listadoConsultorios">
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <a href="#" class="avatar rounded-circle mr-3">
+                      <!-- <img alt="Image placeholder" class="rounded-circle" src="{{empleado.photoURL}}"> -->
+                    </a>
+                    <div class="media-body">
+                      <span class="mb-0 text-sm">{{consultorio.Codigo}}</span>
                     </div>
                   </div>
-                </div>
-                <div class="table-responsive">
-                  <!-- Projects table -->
-                  <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
-                      <tr>
-                          <th scope="col">Especialidad</th>
-                          <th scope="col">Cantidad de usos</th>
-                      </tr>
-                    </thead>
-                    <tbody class="tableAlta">
-                      <tr>
-                          <th scope="row">
-                            {{this.menosUsada}}
-                          </th>
-                          <td>
-                            {{this.menosPuntaje}}
-                          </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                </th>
+                <td>
+                  {{consultorio.Piso}}
+                </td>
+                <td>
+                  <span class="media-body">
+                      <span class="mb-0 text-sm">{{consultorio.Estado}}</span>
+                  </span>
+                </td>
+                <td>
+                  <span class="media-body">
+                      <span class="mb-0 text-sm">{{consultorio.Especialista}}</span>
+                  </span>
+                </td>
+                <td>
+                    <span class="media-body">
+                        <span class="mb-0 text-sm">{{consultorio.Paciente}}</span>
+                    </span>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="isLoading" class="d-flex justify-content-center">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>

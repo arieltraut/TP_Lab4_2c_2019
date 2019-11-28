@@ -18,10 +18,13 @@ export class AdminEspecialidadesComponent implements OnInit {
 
   // panelOpenState = false;
   usuarios;
-  mejoresComentarios;
-  peoresComentarios;
+  mejoresYPeoresComentarios;
   masUsada;
+  masPuntaje;
   menosUsada;
+  menosPuntaje;
+  maxValue;
+  minValue;
 
   ngOnInit() {
     this.TraerTurnos();
@@ -41,15 +44,19 @@ export class AdminEspecialidadesComponent implements OnInit {
     switch (especialidadMasUsada) {
       case countCario:
         this.masUsada = 'Cariologia';
+        this.masPuntaje = countCario;
         break;
       case countOrt:
         this.masUsada = 'Ortodoncia';
+        this.masPuntaje = countOrt;
         break;
       case countImpla:
         this.masUsada = 'Implantologia';
+        this.masPuntaje = countImpla;
         break;
       case countRadio:
         this.masUsada = 'Radiologia';
+        this.masPuntaje = countRadio;
         break;
     }
 
@@ -57,61 +64,77 @@ export class AdminEspecialidadesComponent implements OnInit {
 
     switch (especialidadMenosUsada) {
       case countCario:
-        this.masUsada = 'Cariologia';
+        this.menosUsada = 'Cariologia';
+        this.menosPuntaje = countCario;
         break;
       case countOrt:
-        this.masUsada = 'Ortodoncia';
+        this.menosUsada = 'Ortodoncia';
+        this.menosPuntaje = countOrt;
         break;
       case countImpla:
-        this.masUsada = 'Implantologia';
+        this.menosUsada = 'Implantologia';
+        this.menosPuntaje = countImpla;
         break;
       case countRadio:
-        this.masUsada = 'Radiologia';
+        this.menosUsada = 'Radiologia';
+        this.menosPuntaje = countRadio;
         break;
     }
+
   }
 
   cargarComentarios() {
-    this.mejoresComentarios = [];
-    this.peoresComentarios = [];
+    this.mejoresYPeoresComentarios = [];
 
-    // const turnosEncuestados = this.turnos.filter(x => x.Estado === EstadoTurno.Finalizado && x.Encuesta != null);
+    const turnosEncuestados = this.turnos.filter(x => x.Estado === EstadoTurno.Finalizado && x.Encuesta != null);
 
-    // if (turnosEncuestados.length > 0) {
-    //   const puntuacionesEsp = turnosEncuestados.map((obj) => {
-    //     return Number.parseInt(obj.Encuesta.PuntuacionEspecialista);
-    //   });
+    console.log(turnosEncuestados);
 
-    //   const maxValue = Math.max(...puntuacionesEsp);
-    //   const minValue = Math.min(...puntuacionesEsp);
+    if (turnosEncuestados.length > 0) {
+      const puntuacionesEsp = turnosEncuestados.map((obj) => {
+        return Number(obj.Encuesta.PuntuacionEspecialista);
+      });
 
-    //   turnosEncuestados.forEach(element => {
-    //     let comentario = {
-    //       NombreCliente: "",
-    //       Comentario: ""
-    //     };
+      this.maxValue = Math.max(...puntuacionesEsp);
+      this.minValue = Math.min(...puntuacionesEsp);
 
-    //     if (Number.parseInt(element.Encuesta.PuntuacionEspecialista) == maxValue) {
-    //       comentario.Comentario = element.Encuesta.Opinion;
-    //       comentario.NombreCliente = element.NombreCliente;
-    //       this.mejoresComentarios.push(comentario);
-    //     }
-    //     else if (Number.parseInt(element.Encuesta.PuntuacionEspecialista) == minValue) {
-    //       comentario.Comentario = element.Encuesta.Opinion;
-    //       comentario.NombreCliente = element.NombreCliente;
-    //       this.peoresComentarios.push(comentario);
-    //     }
-    //   });
-    // }
+      this.mejoresYPeoresComentarios = turnosEncuestados.filter(t => t.Encuesta.PuntuacionEspecialista === this.maxValue
+                                                             || t.Encuesta.PuntuacionEspecialista === this.minValue)
+                                                             .sort((a, b) => b.Encuesta.PuntuacionEspecialista
+                                                              - a.Encuesta.PuntuacionEspecialista);
+
+      console.log(this.mejoresYPeoresComentarios);
+
+      // turnosEncuestados.forEach(element => {
+      //   const comentario = {
+      //     Especialidad: '',
+      //     NombreCliente: '',
+      //     Comentario: ''
+      //   };
+
+      //   if (Number(element.Encuesta.PuntuacionEspecialista === this.maxValue ||
+      //              element.Encuesta.PuntuacionEspecialista) === this.minValue) {
+      //     comentario.Comentario = element.Encuesta.Opinion;
+      //     comentario.NombreCliente = element.NombreCliente;
+      //     comentario.Especialidad = element.Especialidad;
+      //     this.mejoresYPeoresComentarios.push(comentario);
+      //   }
+      // });
+    }
   }
+
 
 
 
   TraerTurnos() {
     this.listadoObservable = this.bd.TraerTodos('turnos');
-    this.listadoObservable.subscribe(x => {
-      this.turnos = x.filter(user => user.type === 'Cliente');
+    this.listadoObservable.subscribe(turnos => {
+      if (turnos) {
+        this.turnos = turnos;
+        this.cargarEspecialidades();
+        this.cargarComentarios();
+      }
     });
-  }
+ }
 
 }

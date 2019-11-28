@@ -43,6 +43,7 @@ import { AdminEmpleadosComponent } from './pages/admin-empleados/admin-empleados
 import { AdminEspecialidadesComponent } from './pages/admin-especialidades/admin-especialidades.component';
 import { TurnosComponent } from './pages/turnos/turnos.component';
 import { EstadoTurnoDirective } from './directives/estado-turno.directive';
+import { RecepcionComponent } from './pages/recepcion/recepcion.component';
 
 
 
@@ -63,7 +64,8 @@ import { EstadoTurnoDirective } from './directives/estado-turno.directive';
     AdminEmpleadosComponent,
     AdminEspecialidadesComponent,
     TurnosComponent,
-    EstadoTurnoDirective
+    EstadoTurnoDirective,
+    RecepcionComponent
   ],
   imports: [
     BrowserModule,

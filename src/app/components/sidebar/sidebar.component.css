@@ -42,8 +42,12 @@
   color: #11cdef;
 }
 .fa-first-aid {
-  color: #f3a4b5 ;
+  color: #f3a4b5;
 }
+.fa-person-booth {
+  color: #2dce89;
+}
+
 
 /*******divider**************/
 @media (min-width: 768px){
