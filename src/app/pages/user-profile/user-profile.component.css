@@ -19,3 +19,61 @@
   border-radius: 50% !important;
   object-fit:cover;
 }
+
+
+/*header cards*/
+.text-muted {
+  color: #8898aa !important;
+}
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+.mb-0, .my-0 {
+  margin-bottom: 0 !important;
+}
+.card-title {
+  margin-bottom: 1.25rem;
+}
+h5, .h5 {
+  font-size: 0.8125rem;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #32325d;
+}
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+.font-weight-bold {
+  font-weight: 600 !important;
+}
+.mb-0, .my-0 {
+  margin-bottom: 0 !important;
+}
+h2, .h2 {
+  font-size: 1.25rem;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #32325d;
+}
+
+h1{
+  color: white;
+  margin-bottom: 5px;
+}
+
+
+.contenedor {
+  margin-top: -9rem !important;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 200px;
+}
