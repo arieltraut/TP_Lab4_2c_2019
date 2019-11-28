@@ -6,6 +6,9 @@ import Swal from 'sweetalert2';
 import { TurnoInterface, EstadoTurno } from 'src/app/classes/turno';
 import { Observable } from 'rxjs/internal/Observable';
 import { EncuestaInterface } from 'src/app/classes/encuesta';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
 
@@ -49,7 +52,7 @@ export class TurnosComponent implements OnInit {
     this.clientes = [];
     this.turnos = [];
     this.TraerClientes();
-    this.TraerEspecialistas();
+    // this.TraerEspecialistas();
     this.TraerTurnos();
 
     if (this.usuario.type === 'Cliente' ) {
@@ -103,17 +106,6 @@ export class TurnosComponent implements OnInit {
       );
 
       this.onReset();
-
-      // this.TraerEspecialistasPorFecha();
-      // this.fechaForm.setValue("");
-      // this.especialistaForm.setValue("");
-      // if (this.perfil == Perfil.Cliente) {
-      //   this.clienteForm.setValue(this.user);
-      // }
-      // else {
-      //   this.clienteForm.setValue("");
-      // }
-      // this.especialistas = [];
     });
   }
 
@@ -346,6 +338,37 @@ export class TurnosComponent implements OnInit {
     });
   }
 
+  TraerEspecialistas2() {
+    // console.log("form antes: " + this.especialistaForm.value);
+    // console.log("especialistas antes: " + this.especialistas.length);
+    this.especialistas = [];
+    this.especialistaForm.setValue(null);
+    // console.log("especialistas despues: " + this.especialistas.length);
+    // console.log("form despues: " + this.especialistaForm.value);
+    this.especialistaForm.reset();
+
+    const fechaSelected = this.registerForm.value.fechaForm;
+
+    let turnosIgualDia = [];
+    turnosIgualDia = this.turnos.filter(turno =>
+      turno.Fecha === fechaSelected && turno.Estado === EstadoTurno.Pendiente);
+
+    console.log(turnosIgualDia);
+
+    let especialistasAux = [];
+
+    this.listadoObservable = this.bd.TraerTodos('users');
+    this.listadoObservable.subscribe(usuarios => {
+      especialistasAux = usuarios.filter(usuario => usuario.type === 'Especialista');
+      especialistasAux.forEach(especialista => {
+        if (turnosIgualDia.filter(turnoDia => turnoDia.UidEspecialista === especialista.Uid).length < 3) {
+          this.especialistas.push(especialista);
+        }
+      });
+    });
+  }
+
+
   TraerTurnos() {
     this.listadoObservable = this.bd.TraerTodos('turnos');
     this.listadoObservable.subscribe(turnos => {
@@ -361,6 +384,76 @@ export class TurnosComponent implements OnInit {
       }
     });
   }
+
+
+  descarga() {
+    // this.eliminOK = false;
+    const documentDefinition = { content: [
+        {
+            text: 'Mis Turnos',
+            bold: true,
+            fontSize: 20,
+            alignment: 'center',
+            decoration: 'underline',
+            margin: [0, 0, 0, 20]
+        },
+        this.getListaTurnosPDF(),
+      ],
+          styles: {
+            name: {
+              fontSize: 14,
+            },
+            jobTitle: {
+              fontSize: 16,
+              bold: true,
+              italics: true
+            }
+          }
+        };
+    pdfMake.createPdf(documentDefinition).download('ListadoTurnos.pdf');
+  }
+
+  getListaTurnosPDF() {
+    const exs = [];
+    this.turnos.forEach(element => {
+      exs.push(
+        [{
+          columns: [
+            [{
+              text: 'Especialista: ' + element.NombreEspecialista,
+              style: 'jobTitle'
+            },
+            {
+              text:  'Especialidad: ' + element.Especialidad,
+              style: 'name'
+            },
+            {
+              text:  'Fecha: ' + element.Fecha,
+              style: 'name'
+            },
+            {
+              text:  'Estado: ' + element.Estado,
+              style: 'name'
+            },
+            {
+              text:  'Consultorio: ' + element.Consultorio,
+              style: 'name'
+            },
+          ]
+          ]
+        }]
+      );
+    });
+    return {
+      table: {
+        widths: ['*'],
+        body: [
+          ...exs
+        ]
+      }
+    };
+  }
+
 
 
 

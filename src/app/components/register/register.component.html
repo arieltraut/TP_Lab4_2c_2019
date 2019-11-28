@@ -90,6 +90,12 @@
                   <label for="acceptTerms" class="form-check-label">Acepto los Terminos y Condiciones</label>
                   <div *ngIf="submitted && !!f.acceptTerms.errors" class="invalid-feedback">Debe aceptar los TyC</div>
                 </div>
+
+                <form class="margin-bottom m-5">
+                  <re-captcha (resolved)="resolved($event)" siteKey="6LdVZr8UAAAAAGUuINv5OIeNIoBm1Sh1FltfVneo">
+                  </re-captcha>
+                </form>
+
                 <button *ngIf="!isLoading" type="submit" class="btn btn-dark btn-block text-uppercase mb-2 rounded-pill shadow-sm">Registrar</button>
                 <div *ngIf="isLoading" class="d-flex justify-content-center">
                   <div class="spinner-border" role="status">

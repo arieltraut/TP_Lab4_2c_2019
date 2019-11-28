@@ -97,8 +97,8 @@ export class FirebaseAuthService {
       lastLoginAt: date.toLocaleDateString(),
       displayName: name,
       photoURL: photo,
-      type: (type) ? type : 'cliente',
-      especialidad: (especial) ? especial : 'ninguna'
+      type: (type) ? type : 'Cliente',
+      especialidad: (especial) ? especial : 'Ninguna'
       // emailVerified: user.emailVerified
     };
     return userRef.set(userData, {

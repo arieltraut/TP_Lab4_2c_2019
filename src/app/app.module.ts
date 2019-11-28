@@ -6,6 +6,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
+
 
 
 // Firebase
@@ -78,6 +80,8 @@ import { RecepcionComponent } from './pages/recepcion/recepcion.component';
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     BrowserAnimationsModule,
     AngularFontAwesomeModule,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   providers: [FirebaseAuthService,
               FirebaseBdService,

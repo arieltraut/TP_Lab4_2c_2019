@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit {
   isLoading = false;
   registerForm: FormGroup;
   submitted = false;
+  captchaVerificado: boolean;
 
   constructor( private authenticationService: FirebaseAuthService,
                private formBuilder: FormBuilder,
@@ -34,11 +35,15 @@ export class RegisterComponent implements OnInit {
       acceptTerms: [false, Validators.requiredTrue]
     }, {
         validator: MustMatch('password', 'confirmPassword')
-      });
+    });
+    this.captchaVerificado = false;
   }
+
 
   // para acceder facilmente a los controles del form
   get f() { return this.registerForm.controls; }
+
+
 
   onRegistrar() {
     this.submitted = true;
@@ -49,7 +54,8 @@ export class RegisterComponent implements OnInit {
     }
     this.isLoading = true;
     // form valido
-    this.authenticationService.SignUp(this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.name, false)
+    // tslint:disable-next-line: max-line-length
+    this.authenticationService.SignUp(this.registerForm.value.email, this.registerForm.value.password, this.registerForm.value.name, false, 'assets/default-profile.png')
       .then((result) => {
         this.isLoading = false;
         this.onReset();
@@ -73,6 +79,10 @@ export class RegisterComponent implements OnInit {
     } else {
       this.alertError.nativeElement.classList.remove('d-none');
     }
+  }
+
+  resolved(captchaResponse: string) {
+    this.captchaVerificado = true;
   }
 }
 

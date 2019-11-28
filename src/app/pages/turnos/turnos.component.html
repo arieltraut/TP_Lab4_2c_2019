@@ -105,7 +105,8 @@
               <h3 class="mb-0">Turnos</h3>
             </div>
             <div class="col text-right">
-              <a class="btn btn-sm btn-primary" (click)="TraerTurnos(); onReset()" style="color: white;">Mostrar Todos</a>
+              <a *ngIf="this.usuario.type != 'Cliente'" class="btn btn-sm btn-primary" (click)="TraerTurnos(); onReset()" style="color: white;">Mostrar Todos</a>
+              <a *ngIf="this.usuario.type == 'Cliente'" class="btn btn-sm btn-primary" (click)="descarga(); onReset()" style="color: white;">Descargar Turnos</a>
             </div>
           </div>
         </div>
@@ -125,6 +126,9 @@
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <span *ngIf="turnos.length == 0" class="fuenteTabla text-sm">No se encuentran turnos registrados.</span>
+              </tr>
               <tr *ngFor="let turno of turnos">
                 <th *ngIf="this.usuario.type != 'Especialista'" scope="row">
                     {{turno.NombreEspecialista}}
@@ -205,8 +209,7 @@
                           <div class="form-group">
                             <label *ngIf="this.usuario.type != 'Admin'" class="form-control-label" for="input-username">Fecha Turno</label>
                             <label *ngIf="this.usuario.type == 'Admin'" class="form-control-label" for="input-username">Seleccione primer Fecha</label>
-                            <input *ngIf="this.usuario.type != 'Especialista'" class="form-control form-control-alternative" type="date" formControlName="fechaForm" placeholder="Seleccione una fecha...">
-                            <input *ngIf="this.usuario.type == 'Especialista'" class="form-control form-control-alternative" type="date" formControlName="fechaForm" (change)="FiltroEspecialistaFecha()" placeholder="Seleccione una fecha...">
+                            <input class="form-control form-control-alternative" type="date" formControlName="fechaForm" (change)="FiltroEspecialistaFecha(); TraerEspecialistas2()" placeholder="Seleccione una fecha...">
                             <!-- [ngClass]="{ 'is-invalid': submitted && f.name.errors }" /> -->
                             <!-- <div *ngIf="submitted && !!f.name.errors" class="invalid-feedback">
                               <div *ngIf="!!f.name.errors.required">Debe ingresar su nombre</div>
@@ -248,7 +251,7 @@
                         </div>
                       </div>
                     </div>
-                    <div *ngIf="this.usuario.type == 'Cliente' || this.usuario.type == 'Cliente'" class="pl-lg-4">
+                    <div *ngIf="this.usuario.type == 'Cliente' || this.usuario.type == 'Recepcionista'" class="pl-lg-4">
                       <div class="row">
                           <div class="col-md-11">
                               <div class="form-group">
