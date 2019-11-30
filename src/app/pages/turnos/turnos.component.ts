@@ -61,8 +61,21 @@ export class TurnosComponent implements OnInit {
     }
   }
 
+  FechaDenegada() {
+    const date: Date = new Date(this.registerForm.value.fechaForm); // formato para coparar con variables date
+    date.setDate(date.getDate() + 1);
+
+    if (this.minDate > date) {
+      Swal.fire(
+        'La fecha del turno no puede ser anterior al dia de hoy',
+      );
+      this.onReset();
+      return;
+    }
+  }
 
   CrearTurno() {
+
     this.bd.TraerTodos2('consultorios').then(consultorios => {
       console.log(consultorios);
 
@@ -261,6 +274,25 @@ export class TurnosComponent implements OnInit {
           });
         }
       });
+  }
+
+  MostrarEncuesta(turno: TurnoInterface) {
+    // Swal.fire({
+    //   icon: 'info',
+    //   title: 'Encuesta, opinion dejada:',
+    //   text: turno.Encuesta.Opinion,
+    //   showClass: {
+    //     popup: 'animated fadeInDown faster'
+    //   },
+    //   hideClass: {
+    //     popup: 'animated fadeOutUp faster'
+    //   }
+    // });
+    Swal.fire({
+      icon: 'info',
+      title: 'Encuesta, opinion dejada:',
+      text: turno.Encuesta.Opinion,
+    });
   }
 
 

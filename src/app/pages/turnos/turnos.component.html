@@ -145,15 +145,12 @@
                 <td *ngIf="turno.Estado == 'Pendiente' && this.usuario.type == 'Recepcionista'">
                   <span class="fuenteTabla text-sm effect-1" ><a (click)="cancelarTurno(turno)" data-tooltip="Click para cancelar"><i class="fas fa-circle pendiente mr-3"></i> {{turno.Estado}}</a> </span>
                 </td>
-                <td *ngIf="turno.Estado == 'Pendiente' && this.usuario.type != 'Recepcionista'">
-                    <span class="fuenteTabla text-sm effect-1" ><i class="fas fa-circle pendiente mr-3"></i> {{turno.Estado}}</span>
+                <td *ngIf="turno.Estado != 'Pendiente' && this.usuario.type == 'Recepcionista'">
+                  <span class="fuenteTabla text-sm effect-1" ><i class="fas fa-circle mr-3" [appEstadoTurno]="turno.Estado"></i> {{turno.Estado}} </span>
+                </td>
+                <td *ngIf="this.usuario.type != 'Recepcionista'">
+                    <span class="fuenteTabla text-sm effect-1" ><i class="fas fa-circle mr-3" [appEstadoTurno]="turno.Estado"></i> {{turno.Estado}}</span>
                   </td>
-                <td *ngIf="turno.Estado == 'Cancelado'">
-                  <span class="fuenteTabla text-sm"><i class="fas fa-circle cancel mr-3"></i> {{turno.Estado}}</span>
-                </td>
-                <td *ngIf="turno.Estado == 'Finalizado'">
-                  <span class="fuenteTabla text-sm"><i class="fas fa-circle finalizado mr-3"></i> {{turno.Estado}}</span>
-                </td>
                 <td>
                   <span class="fuenteTabla text-sm"> {{turno.Consultorio}}</span>
                 </td>
@@ -165,11 +162,11 @@
                 </td> -->
                 <td *ngIf="this.usuario.type == 'Cliente'" scope="row">
                     <button *ngIf="turno.Estado == 'Finalizado' && turno.Encuesta == null" class="btn btn-registro btn-primary btnClienteYEsp" (click)="realizarEncuesta(turno)">Encuesta</button>
-                    <button *ngIf="turno.Estado != 'Finalizado' || turno.Encuesta != null" disabled class="btn btn-registro btn-primary btnClienteYEsp" (click)="realizarEncuesta(turno)">Encuesta</button>
+                    <button *ngIf="turno.Estado != 'Finalizado' || turno.Encuesta != null" class="btn btn-registro btn-primary btnClienteYEsp" (click)="MostrarEncuesta(turno)">MEncuesta</button>
                 </td>
                 <td *ngIf="this.usuario.type == 'Especialista'" scope="row"> <!-- cambiar pendiente por iniciado -->
                     <button *ngIf="turno.Estado == 'Pendiente'" class="btn btn-registro btn-primary btnClienteYEsp" (click)="finalizarTurno(turno)">Finalizar</button>
-                    <button *ngIf="turno.Estado != 'Pendiente'" disabled class="btn btn-registro btn-primary btnClienteYEsp" (click)="finalizarTurno(turno)">Finalizar</button>
+                    <button *ngIf="turno.Estado == 'Finalizado'" class="btn btn-registro btn-primary btnClienteYEsp" (click)="MostrarEncuesta(turno)">Detalles</button>
                 </td>
               </tr>
             </tbody>
@@ -209,7 +206,7 @@
                           <div class="form-group">
                             <label *ngIf="this.usuario.type != 'Admin'" class="form-control-label" for="input-username">Fecha Turno</label>
                             <label *ngIf="this.usuario.type == 'Admin'" class="form-control-label" for="input-username">Seleccione primer Fecha</label>
-                            <input class="form-control form-control-alternative" type="date" formControlName="fechaForm" (change)="FiltroEspecialistaFecha(); TraerEspecialistas2()" placeholder="Seleccione una fecha...">
+                            <input class="form-control form-control-alternative" type="date" formControlName="fechaForm" (change)="FechaDenegada();FiltroEspecialistaFecha(); TraerEspecialistas2()" placeholder="Seleccione una fecha...">
                             <!-- [ngClass]="{ 'is-invalid': submitted && f.name.errors }" /> -->
                             <!-- <div *ngIf="submitted && !!f.name.errors" class="invalid-feedback">
                               <div *ngIf="!!f.name.errors.required">Debe ingresar su nombre</div>
@@ -219,6 +216,25 @@
                         </div>
                       </div>
                     </div>
+                    <!-- Calendario de NGPrime -->
+                    <!-- <div class="pl-lg-4">
+                      <div class="row">
+                        <div class="col-lg-11">
+                          <div class="form-group">
+                            <label *ngIf="this.usuario.type != 'Admin'" class="form-control-label" for="input-username">Fecha Turno</label>
+                            <label *ngIf="this.usuario.type == 'Admin'" class="form-control-label" for="input-username">Seleccione primer Fecha</label>
+                            <p-calendar inputStyleClass="form-control form-control-alternative" formControlName="fechaForm" [readonlyInput]="true" [minDate]=minDate (onSelect)="FiltroEspecialistaFecha(); TraerEspecialistas2()" placeholder="Seleccione una fecha..."></p-calendar> -->
+                            <!-- <input class="form-control form-control-alternative" type="date" formControlName="fechaForm" (change)="FiltroEspecialistaFecha(); TraerEspecialistas2()" placeholder="Seleccione una fecha..."> -->
+
+                            <!-- [ngClass]="{ 'is-invalid': submitted && f.name.errors }" /> -->
+                            <!-- <div *ngIf="submitted && !!f.name.errors" class="invalid-feedback">
+                              <div *ngIf="!!f.name.errors.required">Debe ingresar su nombre</div>
+                              <div *ngIf="!!f.name.errors.name">name debe ser valido</div>
+                            </div> -->
+                          <!-- </div>
+                        </div>
+                      </div>
+                    </div> -->
                     <div *ngIf="this.usuario.type == 'Admin'" class="pl-lg-4">
                         <div class="row">
                           <div class="col-lg-11">

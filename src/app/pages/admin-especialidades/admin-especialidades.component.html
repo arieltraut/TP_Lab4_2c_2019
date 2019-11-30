@@ -128,8 +128,7 @@
                       <span class="fuenteTabla text-sm">{{turno.NombreCliente}}</span>
                   </td>
                   <td>
-                    <span class="fuenteTabla text-sm"><i class="mr-3" [ngClass]="{'fa fa-arrow-up pendiente': turno.Encuesta.PuntuacionEspecialista == this.maxValue,
-                       'fas fa-arrow-down cancel': turno.Encuesta.PuntuacionEspecialista == this.minValue }"></i> {{turno.Encuesta.Opinion}} </span>
+                    <span  class="fuenteTabla text-sm"><i class="mr-3" [appUpDownComment]="turno.Encuesta.PuntuacionEspecialista"></i> {{turno.Encuesta.Opinion}} </span>
                   </td>
                 </tr>
               </tbody>

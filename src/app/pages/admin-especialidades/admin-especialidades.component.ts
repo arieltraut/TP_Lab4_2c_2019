@@ -95,16 +95,21 @@ export class AdminEspecialidadesComponent implements OnInit {
         return Number(obj.Encuesta.PuntuacionEspecialista);
       });
 
+      this.mejoresYPeoresComentarios = turnosEncuestados.sort((a, b) => b.Encuesta.PuntuacionEspecialista
+                                                        - a.Encuesta.PuntuacionEspecialista);
+
       this.maxValue = Math.max(...puntuacionesEsp);
       this.minValue = Math.min(...puntuacionesEsp);
 
-      this.mejoresYPeoresComentarios = turnosEncuestados.filter(t => t.Encuesta.PuntuacionEspecialista === this.maxValue
-                                                             || t.Encuesta.PuntuacionEspecialista === this.minValue)
-                                                             .sort((a, b) => b.Encuesta.PuntuacionEspecialista
-                                                              - a.Encuesta.PuntuacionEspecialista);
 
-      console.log(this.mejoresYPeoresComentarios);
+      // this.mejoresYPeoresComentarios = turnosEncuestados.filter(t => t.Encuesta.PuntuacionEspecialista === this.maxValue
+      //                                                        || t.Encuesta.PuntuacionEspecialista === this.minValue)
+      //                                                        .sort((a, b) => b.Encuesta.PuntuacionEspecialista
+      //                                                         - a.Encuesta.PuntuacionEspecialista);
 
+      // console.log(this.mejoresYPeoresComentarios);
+
+      // **************************************************/
       // turnosEncuestados.forEach(element => {
       //   const comentario = {
       //     Especialidad: '',

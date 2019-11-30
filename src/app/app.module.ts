@@ -7,7 +7,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
-
+// import {CalendarModule} from 'primeng/calendar';
 
 
 // Firebase
@@ -46,6 +46,7 @@ import { AdminEspecialidadesComponent } from './pages/admin-especialidades/admin
 import { TurnosComponent } from './pages/turnos/turnos.component';
 import { EstadoTurnoDirective } from './directives/estado-turno.directive';
 import { RecepcionComponent } from './pages/recepcion/recepcion.component';
+import { UpDownCommentDirective } from './directives/up-down-comment.directive';
 
 
 
@@ -67,7 +68,8 @@ import { RecepcionComponent } from './pages/recepcion/recepcion.component';
     AdminEspecialidadesComponent,
     TurnosComponent,
     EstadoTurnoDirective,
-    RecepcionComponent
+    RecepcionComponent,
+    UpDownCommentDirective
   ],
   imports: [
     BrowserModule,
@@ -81,7 +83,8 @@ import { RecepcionComponent } from './pages/recepcion/recepcion.component';
     BrowserAnimationsModule,
     AngularFontAwesomeModule,
     RecaptchaModule,
-    RecaptchaFormsModule
+    RecaptchaFormsModule,
+    
   ],
   providers: [FirebaseAuthService,
               FirebaseBdService,

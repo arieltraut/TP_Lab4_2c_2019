@@ -681,3 +681,15 @@ a:hover{
   -moz-transform:    translateY(-12px);
   transform:         translateY(-12px);
 }
+
+.ui-datepicker-current-day{
+  background-color: #5e72e4;
+  cursor: pointer;
+}
+
+.ui-inputfield.ui-widget.ui-state-default {
+  border: 1px solid #888888;
+  background: #ffffff ;
+  font-weight: normal;
+  color: #000000;
+}
