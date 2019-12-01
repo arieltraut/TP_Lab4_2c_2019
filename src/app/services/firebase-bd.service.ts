@@ -37,9 +37,9 @@ export class FirebaseBdService {
     });
   }
 
-  TraerUno(collection, obj) {
+  TraerUno(id, collection) {
     return new Promise<any>((resolve, reject) => {
-      this.afs.collection(`${collection}`).doc(`${obj.uid}`).valueChanges().subscribe(snapshots => {
+      this.afs.collection(`${collection}`).doc(id).valueChanges().subscribe(snapshots => {
         resolve(snapshots);
       });
     });

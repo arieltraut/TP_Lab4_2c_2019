@@ -143,7 +143,7 @@
                     <span class="fuenteTabla text-sm">{{turno.Fecha}}</span>
                 </td>
                 <td *ngIf="turno.Estado == 'Pendiente' && this.usuario.type == 'Recepcionista'">
-                  <span class="fuenteTabla text-sm effect-1" ><a (click)="cancelarTurno(turno)" data-tooltip="Click para cancelar"><i class="fas fa-circle pendiente mr-3"></i> {{turno.Estado}}</a> </span>
+                  <span class="fuenteTabla text-sm effect-1" ><a (click)="iniciarYCancelarTurno(turno)" data-tooltip="Iniciar o cancelar turno"><i class="fas fa-circle pendiente mr-3"></i> {{turno.Estado}}</a> </span>
                 </td>
                 <td *ngIf="turno.Estado != 'Pendiente' && this.usuario.type == 'Recepcionista'">
                   <span class="fuenteTabla text-sm effect-1" ><i class="fas fa-circle mr-3" [appEstadoTurno]="turno.Estado"></i> {{turno.Estado}} </span>
@@ -165,7 +165,7 @@
                     <button *ngIf="turno.Estado != 'Finalizado' || turno.Encuesta != null" class="btn btn-registro btn-primary btnClienteYEsp" (click)="MostrarEncuestaResenia(turno)">Ver Encuesta</button>
                 </td>
                 <td *ngIf="this.usuario.type == 'Especialista'" scope="row"> <!-- cambiar pendiente por iniciado -->
-                    <button *ngIf="turno.Estado == 'Pendiente'" class="btn btn-registro btn-primary btnClienteYEsp" (click)="finalizarTurno(turno)">Finalizar</button>
+                    <button *ngIf="turno.Estado == 'Iniciado'" class="btn btn-registro btn-primary btnClienteYEsp" (click)="finalizarTurno(turno)">Finalizar</button>
                     <button *ngIf="turno.Estado == 'Finalizado'" class="btn btn-registro btn-primary btnClienteYEsp" (click)="MostrarEncuestaResenia(turno)">Ver Encuesta</button>
                 </td>
               </tr>

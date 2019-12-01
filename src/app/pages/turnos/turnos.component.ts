@@ -61,8 +61,9 @@ export class TurnosComponent implements OnInit {
     }
   }
 
+
   FechaDenegada() {
-    if(this.usuario.type === 'Cliente' || this.usuario.type === 'Recepcionista') {
+    if (this.usuario.type === 'Cliente' || this.usuario.type === 'Recepcionista') {
       const date: Date = new Date(this.registerForm.value.fechaForm); // formato para comparar con variables date
       date.setDate(date.getDate() + 1);
 
@@ -80,9 +81,18 @@ export class TurnosComponent implements OnInit {
 
 
   CrearTurno() {
-
     this.bd.TraerTodos2('consultorios').then(consultorios => {
       console.log(consultorios);
+      consultorios = consultorios.filter(consuLibre => consuLibre.Estado === 'Libre');
+
+      if (consultorios.length < 1) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Atencion',
+          text: 'Todos los consultorios estan ocupados, los especialistas deben finalizar los turnos iniciados',
+        });
+        return;
+      }
 
       const consultorio = consultorios[Math.floor((Math.random() * 4))];
       const especialista: User = this.registerForm.value.especialistaForm;
@@ -138,17 +148,34 @@ export class TurnosComponent implements OnInit {
   }
 
 
-  cancelarTurno(turno: TurnoInterface) {
+  iniciarYCancelarTurno(turno: TurnoInterface) {
     Swal.fire({
-      title: 'Cancelar Turno?',
+      title: 'Que deseas hacer?',
       text: 'La accion no se puede revertir!',
       icon: 'warning',
+      showCloseButton: true,
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, deseo cancelarlo!'
+      confirmButtonText: 'Iniciar turno!',
+      cancelButtonText: 'Cancelar turno!',
     }).then((result) => {
       if (result.value) {
+        turno.Estado = EstadoTurno.Iniciado;
+        console.log(turno);
+        this.bd.ModificarUno(turno, 'turnos');
+        this.bd.TraerUno(turno.ConsultorioId, 'consultorios').then(consultorio => {
+          console.log(consultorio);
+          consultorio.Estado = 'Ocupado';
+          console.log(consultorio);
+          this.bd.ModificarUno(consultorio, 'consultorios');
+        });
+        Swal.fire(
+          'Iniciado!',
+          'El turno ha sido iniciado, el paciente puede ingresar.',
+          'success'
+        );
+      } else if (
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
         turno.Estado = EstadoTurno.Cancelado;
         console.log(turno);
         this.bd.ModificarUno(turno, 'turnos');
@@ -160,6 +187,7 @@ export class TurnosComponent implements OnInit {
       }
     });
   }
+
 
   finalizarTurno(turno) {
     Swal.fire({

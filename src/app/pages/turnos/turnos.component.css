@@ -530,13 +530,16 @@ a {
 }
 
 /*icon-colors*/
-.pendiente  {
+.finalizado  {
   color: #2dce89;
 }
 .cancel {
   color: #fb6340;
 }
-.finalizado {
+.pendiente {
+  color: #ffd600;
+}
+.iniciado {
   color: #11cdef;
 }
 

@@ -3,7 +3,8 @@ import { EncuestaInterface } from './encuesta';
 export enum EstadoTurno {
     Pendiente = 'Pendiente',
     Cancelado = 'Cancelado',
-    Finalizado = 'Finalizado'
+    Finalizado = 'Finalizado',
+    Iniciado = 'Iniciado'
 }
 
 export interface TurnoInterface {

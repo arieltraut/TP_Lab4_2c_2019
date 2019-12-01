@@ -25,7 +25,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
       this.usuario = JSON.parse(localStorage.getItem('user'));
       console.log('Este es el log:' + this.usuario.uid);
-      this.bdService.TraerUno('users', this.usuario)
+      this.bdService.TraerUno(this.usuario.uid, 'users')
       .then(result => {
         console.log(result);
         this.usuario = result;

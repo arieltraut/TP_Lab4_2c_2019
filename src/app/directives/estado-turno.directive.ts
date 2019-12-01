@@ -20,12 +20,16 @@ export class EstadoTurnoDirective implements OnInit {
         case(EstadoTurno.Pendiente):
           this.renderer.addClass(this.el.nativeElement, 'pendiente');
           break;
-        case(EstadoTurno.Cancelado):
-          this.renderer.addClass(this.el.nativeElement, 'cancel');
+        case(EstadoTurno.Iniciado):
+          this.renderer.addClass(this.el.nativeElement, 'iniciado');
           break;
         case(EstadoTurno.Finalizado):
           this.renderer.addClass(this.el.nativeElement, 'finalizado');
           break;
+        case(EstadoTurno.Cancelado):
+          this.renderer.addClass(this.el.nativeElement, 'cancel');
+          break;
+
       }
     }
 }
