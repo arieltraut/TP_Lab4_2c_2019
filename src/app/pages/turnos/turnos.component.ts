@@ -62,17 +62,22 @@ export class TurnosComponent implements OnInit {
   }
 
   FechaDenegada() {
-    const date: Date = new Date(this.registerForm.value.fechaForm); // formato para coparar con variables date
-    date.setDate(date.getDate() + 1);
+    if(this.usuario.type === 'Cliente' || this.usuario.type === 'Recepcionista') {
+      const date: Date = new Date(this.registerForm.value.fechaForm); // formato para coparar con variables date
+      date.setDate(date.getDate() + 1);
 
-    if (this.minDate > date) {
-      Swal.fire(
-        'La fecha del turno no puede ser anterior al dia de hoy',
-      );
-      this.onReset();
-      return;
+      if (this.minDate > date) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Atencion',
+          text: 'La fecha del turno no puede ser anterior al dia de hoy',
+        });
+        this.onReset();
+        return;
+      }
     }
   }
+
 
   CrearTurno() {
 
@@ -276,23 +281,19 @@ export class TurnosComponent implements OnInit {
       });
   }
 
-  MostrarEncuesta(turno: TurnoInterface) {
-    // Swal.fire({
-    //   icon: 'info',
-    //   title: 'Encuesta, opinion dejada:',
-    //   text: turno.Encuesta.Opinion,
-    //   showClass: {
-    //     popup: 'animated fadeInDown faster'
-    //   },
-    //   hideClass: {
-    //     popup: 'animated fadeOutUp faster'
-    //   }
-    // });
+  MostrarEncuestaResenia(turno: TurnoInterface) {
     Swal.fire({
       icon: 'info',
-      title: 'Encuesta, opinion dejada:',
-      text: turno.Encuesta.Opinion,
+      title: (this.usuario.type === 'Especialista') ? 'Opinion cliente:' : 'Observacion especialista:',
+      text: (this.usuario.type === 'Especialista') ? turno.Encuesta.Opinion : turno.ObservacionesEspecialista,
     });
+    // if (this.usuario.type === 'Especialista') {
+    //   Swal.fire({
+    //     icon: 'info',
+    //     title: 'Observacion especialista:',
+    //     text: turno.ObservacionesEspecialista,
+    //   });
+    // }
   }
 
 
@@ -406,11 +407,11 @@ export class TurnosComponent implements OnInit {
     this.listadoObservable.subscribe(turnos => {
       console.log(this.turnos);
       if (this.usuario.type === 'Cliente') {
-        this.turnos = turnos.filter(x => x.UidCliente === this.usuario.uid);
+        this.turnos = turnos.filter(x => x.UidCliente === this.usuario.uid).sort((a, b) => b.Fecha - a.Fecha);
       } else if (this.usuario.type === 'Recepcionista') {
-        this.turnos = turnos;
+        this.turnos = turnos.sort((a, b) => b.Fecha - a.Fecha);
       } else if (this.usuario.type === 'Especialista') {
-        this.turnos = turnos.filter(x => x.UidEspecialista === this.usuario.uid);
+        this.turnos = turnos.filter(x => x.UidEspecialista === this.usuario.uid).sort((a, b) => b.Fecha - a.Fecha);
       } else if (this.usuario.type === 'Admin') {
         this.turnos =  turnos.sort((a, b) => a.Especialidad.localeCompare(b.Especialidad));
       }

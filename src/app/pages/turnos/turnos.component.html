@@ -105,8 +105,8 @@
               <h3 class="mb-0">Turnos</h3>
             </div>
             <div class="col text-right">
-              <a *ngIf="this.usuario.type != 'Cliente'" class="btn btn-sm btn-primary" (click)="TraerTurnos(); onReset()" style="color: white;">Mostrar Todos</a>
-              <a *ngIf="this.usuario.type == 'Cliente'" class="btn btn-sm btn-primary" (click)="descarga(); onReset()" style="color: white;">Descargar Turnos</a>
+              <a *ngIf="this.usuario.type == 'Admin' || this.usuario.type == 'Especialista'" class="btn btn-sm btn-primary" (click)="TraerTurnos(); onReset()" style="color: white;">Mostrar Todos</a>
+              <a *ngIf="this.usuario.type == 'Cliente' || this.usuario.type == 'Recepcionista'" class="btn btn-sm btn-primary" (click)="descarga(); onReset()" style="color: white;">Descargar Turnos</a>
             </div>
           </div>
         </div>
@@ -122,7 +122,7 @@
                 <th scope="col">Estado</th>
                 <th scope="col">Consultorio</th>
                 <th *ngIf="this.usuario.type == 'Cliente'" scope="col">Encuesta</th>
-                <th *ngIf="this.usuario.type == 'Especialista'" scope="col">Finalizar Turno</th>
+                <th *ngIf="this.usuario.type == 'Especialista'" scope="col">Acciones</th>
               </tr>
             </thead>
             <tbody>
@@ -161,12 +161,12 @@
                   <i class="fas fa-arrow-down text-danger mr-3"></i> 46,53%
                 </td> -->
                 <td *ngIf="this.usuario.type == 'Cliente'" scope="row">
-                    <button *ngIf="turno.Estado == 'Finalizado' && turno.Encuesta == null" class="btn btn-registro btn-primary btnClienteYEsp" (click)="realizarEncuesta(turno)">Encuesta</button>
-                    <button *ngIf="turno.Estado != 'Finalizado' || turno.Encuesta != null" class="btn btn-registro btn-primary btnClienteYEsp" (click)="MostrarEncuesta(turno)">MEncuesta</button>
+                    <button *ngIf="turno.Estado == 'Finalizado' && turno.Encuesta == null" class="btn btn-registro btn-primary btnClienteYEsp" (click)="realizarEncuesta(turno)">Dejar Encuesta</button>
+                    <button *ngIf="turno.Estado != 'Finalizado' || turno.Encuesta != null" class="btn btn-registro btn-primary btnClienteYEsp" (click)="MostrarEncuestaResenia(turno)">Ver Encuesta</button>
                 </td>
                 <td *ngIf="this.usuario.type == 'Especialista'" scope="row"> <!-- cambiar pendiente por iniciado -->
                     <button *ngIf="turno.Estado == 'Pendiente'" class="btn btn-registro btn-primary btnClienteYEsp" (click)="finalizarTurno(turno)">Finalizar</button>
-                    <button *ngIf="turno.Estado == 'Finalizado'" class="btn btn-registro btn-primary btnClienteYEsp" (click)="MostrarEncuesta(turno)">Detalles</button>
+                    <button *ngIf="turno.Estado == 'Finalizado'" class="btn btn-registro btn-primary btnClienteYEsp" (click)="MostrarEncuestaResenia(turno)">Ver Encuesta</button>
                 </td>
               </tr>
             </tbody>
