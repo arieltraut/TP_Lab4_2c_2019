@@ -63,7 +63,7 @@ export class TurnosComponent implements OnInit {
 
   FechaDenegada() {
     if(this.usuario.type === 'Cliente' || this.usuario.type === 'Recepcionista') {
-      const date: Date = new Date(this.registerForm.value.fechaForm); // formato para coparar con variables date
+      const date: Date = new Date(this.registerForm.value.fechaForm); // formato para comparar con variables date
       date.setDate(date.getDate() + 1);
 
       if (this.minDate > date) {
