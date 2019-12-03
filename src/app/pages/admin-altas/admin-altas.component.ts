@@ -46,7 +46,8 @@ export class AdminAltasComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       type: ['', Validators.required],
-      especialidad: ['', Validators.required]
+      especialidad: ['', Validators.required],
+      photo: ['', Validators.required]
     }, {
         validator: MustMatch('password', 'confirmPassword')
       });

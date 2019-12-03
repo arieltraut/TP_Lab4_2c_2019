@@ -153,7 +153,8 @@
                 <div [ngClass]="{'col-6': this.registerForm.value.type == 'Especialista', 'col-md-12': this.registerForm.value.type != 'Especialista' }">
                   <div class="form-group">
                     <label class="form-control-label" for="select-type">Tipo Usuario</label>
-                    <select formControlName="type" class="form-control form-control-alternative" id="select-type">
+                    <select formControlName="type" class="form-control form-control-alternative" id="select-type"
+                    [ngClass]="{ 'is-invalid': submitted && f.type.errors }">
                       <option value="" disabled selected>Elegir tipo de usuario</option>
                       <option>Cliente</option>
                       <option>Recepcionista</option>
@@ -161,7 +162,6 @@
                     </select>
                     <div *ngIf="submitted && !!f.type.errors" class="invalid-feedback">
                       <div *ngIf="!!f.type.errors.required">Debe ingresar tipo</div>
-                      <div *ngIf="!!f.type.errors.type">name debe ser valido</div>
                     </div>
                   </div>
                 </div>
@@ -178,8 +178,11 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="form-control-label" for="input-address">Imagen perfil</label>
-                    <label for="file" class="form-control form-control-alternative labelFile"><i class="fas fa-upload input-icono"></i>{{filename}}</label>
-                    <input #file type="file" id="file" accept='image/*'class="inputfile" (change)="preview(file.files); getFileName($event)" />
+                    <label for="file" class="form-control form-control-alternative labelFile" [ngClass]="{ 'is-invalid': submitted && f.photo.errors }"><i class="fas fa-upload input-icono"></i>{{filename}} </label>
+                    <input formControlName="photo" #file type="file" id="file" accept='image/*' class="inputfile" (change)="preview(file.files); getFileName($event)" />
+                    <div *ngIf="submitted && !!f.photo.errors" class="invalid-feedback">
+                      <div *ngIf="!!f.photo.errors.required">Debe seleccionar imagen</div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-12">
