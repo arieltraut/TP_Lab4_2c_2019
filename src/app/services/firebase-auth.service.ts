@@ -63,12 +63,20 @@ export class FirebaseAuthService {
 
   // Sign up with email/password
   SignUp(email, password, name, esAdmin, photoURL?, type?, especialidad?) {
+    let admin;
+    if (esAdmin) {
+      admin = JSON.parse(localStorage.getItem('user-bd'));
+    }
+
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
 
         this.SetUserData(result.user, name, photoURL, type, especialidad);
         if (!esAdmin) {
           // this.router.navigate(['/login']);
+        }
+        if (esAdmin) {
+          this.SignIn(admin.email, 'arieltraut');
         }
       }).catch((error) => {
         window.alert(error.message);
