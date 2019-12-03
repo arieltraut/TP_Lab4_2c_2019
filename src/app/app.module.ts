@@ -18,14 +18,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBw42z98N348sCwWVey9uESC2whYKhGDEQ',
-  authDomain: 'tp-2-lab4.firebaseapp.com',
-  databaseURL: 'https://tp-2-lab4.firebaseio.com',
-  projectId: 'tp-2-lab4',
-  storageBucket: 'tp-2-lab4.appspot.com',
-  messagingSenderId: '856811049330',
-  appId: '1:856811049330:web:2ad33d953fda11b2478deb',
-  measurementId: 'G-Z0X6QL7JNF'
+
 };
 
 
@@ -84,7 +77,7 @@ import { UpDownCommentDirective } from './directives/up-down-comment.directive';
     AngularFontAwesomeModule,
     RecaptchaModule,
     RecaptchaFormsModule,
-    
+
   ],
   providers: [FirebaseAuthService,
               FirebaseBdService,
