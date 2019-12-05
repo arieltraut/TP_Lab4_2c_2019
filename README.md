@@ -5,7 +5,7 @@ Segundo trabajo practico de Laboratorio 4
 
 ## Bienvenido 👩‍⚕️
 
-Haz click en el siguiente enlace para ingresar a la web de [Smile Clinica Odontologica]( "Smile Clinica")
+Haz click en el siguiente enlace para ingresar a la web de [Smile Clinica Odontologica](https://arieltraut.github.io/TP_Lab4_2c_2019/ "Smile Clinica")
 
 Al ingresar a la aplicacion, deberas loguearte lo cual te asignara las funciones acordes a tu perfil, si es tu primera vez en la clinica tenes que registrarte como cliente de la misma.
 

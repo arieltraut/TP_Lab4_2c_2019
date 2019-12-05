@@ -18,7 +18,14 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 
 
 const firebaseConfig = {
-
+  apiKey: 'AIzaSyBw42z98N348sCwWVey9uESC2whYKhGDEQ',
+  authDomain: 'tp-2-lab4.firebaseapp.com',
+  databaseURL: 'https://tp-2-lab4.firebaseio.com',
+  projectId: 'tp-2-lab4',
+  storageBucket: 'tp-2-lab4.appspot.com',
+  messagingSenderId: '856811049330',
+  appId: '1:856811049330:web:2ad33d953fda11b2478deb',
+  measurementId: 'G-Z0X6QL7JNF'
 };
 
 
@@ -40,6 +47,9 @@ import { TurnosComponent } from './pages/turnos/turnos.component';
 import { EstadoTurnoDirective } from './directives/estado-turno.directive';
 import { RecepcionComponent } from './pages/recepcion/recepcion.component';
 import { UpDownCommentDirective } from './directives/up-down-comment.directive';
+import { EspecialidadPipe } from './pipes/especialidad.pipe';
+import { ToUpperCasePipe } from './pipes/to-upper-case.pipe';
+import { SombreadoDirective } from './directives/sombreado.directive';
 
 
 
@@ -61,8 +71,11 @@ import { UpDownCommentDirective } from './directives/up-down-comment.directive';
     AdminEspecialidadesComponent,
     TurnosComponent,
     EstadoTurnoDirective,
+    UpDownCommentDirective,
+    SombreadoDirective,
     RecepcionComponent,
-    UpDownCommentDirective
+    EspecialidadPipe,
+    ToUpperCasePipe,
   ],
   imports: [
     BrowserModule,

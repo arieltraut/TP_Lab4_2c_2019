@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { FirebaseBdService } from 'src/app/services/firebase-bd.service';
 import { TurnoInterface, EstadoTurno } from 'src/app/classes/turno';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-admin-especialidades',
@@ -15,6 +18,13 @@ export class AdminEspecialidadesComponent implements OnInit {
   listadoObservable: Observable<any[]>;
   turnos: TurnoInterface[];
   comentarios: any[];
+
+  cards = {
+    positivos: 0,
+    negativos: 0,
+    total: 0,
+  };
+
 
   // panelOpenState = false;
   usuarios;
@@ -98,6 +108,9 @@ export class AdminEspecialidadesComponent implements OnInit {
       this.mejoresYPeoresComentarios = turnosEncuestados.sort((a, b) => b.Encuesta.PuntuacionEspecialista
                                                         - a.Encuesta.PuntuacionEspecialista);
 
+      this.obtenerCards(this.mejoresYPeoresComentarios);
+
+
       this.maxValue = Math.max(...puntuacionesEsp);
       this.minValue = Math.min(...puntuacionesEsp);
 
@@ -140,6 +153,82 @@ export class AdminEspecialidadesComponent implements OnInit {
         this.cargarComentarios();
       }
     });
- }
+  }
+
+
+  obtenerCards(listado) {
+    listado.forEach((turno: TurnoInterface) => {
+        this.cards.total++;
+        if(turno.Encuesta.PuntuacionEspecialista >= 6) {
+          this.cards.positivos++;
+        } else {
+          this.cards.negativos++;
+        }
+    });
+  }
+
+  descarga() {
+    // this.eliminOK = false;
+    const documentDefinition = { content: [
+        {
+            text: 'Encuesta',
+            bold: true,
+            fontSize: 20,
+            alignment: 'center',
+            decoration: 'underline',
+            margin: [0, 0, 0, 20]
+        },
+        this.getListaEncuestaPDF(),
+      ],
+          styles: {
+            name: {
+              fontSize: 14,
+            },
+            jobTitle: {
+              fontSize: 16,
+              bold: true,
+              italics: true
+            }
+          }
+        };
+    pdfMake.createPdf(documentDefinition).download('ListadoEncuesta.pdf');
+  }
+
+  getListaEncuestaPDF() {
+    const exs = [];
+    this.mejoresYPeoresComentarios.forEach(element => {
+      exs.push(
+        [{
+          columns: [
+            [{
+              text: 'Especialista: ' + element.NombreEspecialista,
+              style: 'jobTitle'
+            },
+            {
+              text:  'Especialidad: ' + element.Especialidad,
+              style: 'name'
+            },
+            {
+              text:  'Cliente: ' + element.NombreCliente,
+              style: 'name'
+            },
+            {
+              text:  'Comentario: ' + element.Encuesta.Opinion,
+              style: 'name'
+            },
+          ]
+          ]
+        }]
+      );
+    });
+    return {
+      table: {
+        widths: ['*'],
+        body: [
+          ...exs
+        ]
+      }
+    };
+  }
 
 }

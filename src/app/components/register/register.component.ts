@@ -137,6 +137,7 @@ export class RegisterComponent implements OnInit {
 
     }, (error) => {
       // Handle unsuccessful uploads
+      console.log(error);
 
     }, () => {
       // Handle successful uploads on complete

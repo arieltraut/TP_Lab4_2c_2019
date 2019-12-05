@@ -4,6 +4,7 @@ import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FirebaseBdService } from 'src/app/services/firebase-bd.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-altas',
@@ -70,7 +71,6 @@ export class AdminAltasComponent implements OnInit {
 
     // form valido
 
-    // tslint:disable-next-line: max-line-length
     this.authenticationService.SignUp(this.registerForm.value.email,
                                       this.registerForm.value.password,
                                       this.registerForm.value.name,
@@ -80,6 +80,11 @@ export class AdminAltasComponent implements OnInit {
                                       this.registerForm.value.especialidad)
       .then((result) => {
         this.isLoading = false;
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuario creado!',
+          text: `Se realizo el alta con exito`
+        });
         this.onReset();
         this.mostrarAlert(true);
       }).catch((error) => {

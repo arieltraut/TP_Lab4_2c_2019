@@ -36,7 +36,16 @@ export class TurnosComponent implements OnInit {
   especialistas: User[];  // ver disponibilidad especialistas funcion TraerEspecialistasPorFecha()
   clientes: User[];
   turnos: TurnoInterface[];
+  consultorios: any[]; // para card
   opcionFiltroAdm = '';
+
+
+  cards = {
+    especialistas: 0,
+    turnos: 0,
+    consultorios: 0,
+    clientes: 0
+  };
 
 
   minDate = new Date(Date.now());
@@ -52,13 +61,13 @@ export class TurnosComponent implements OnInit {
     this.clientes = [];
     this.turnos = [];
     this.TraerClientes();
-    // this.TraerEspecialistas();
     this.TraerTurnos();
+    this.TraerEspecialistas(); // para card
 
-    if (this.usuario.type === 'Cliente' ) {
-      // this.registerForm.value.clienteForm.setValue(this.usuario);
-      this.registerForm.patchValue({clienteForm: this.usuario});
-    }
+    // if (this.usuario.type === 'Cliente' ) {
+    //   // this.registerForm.value.clienteForm.setValue(this.usuario);
+    //   this.registerForm.patchValue({clienteForm: this.usuario});
+    // }
   }
 
 
@@ -81,22 +90,23 @@ export class TurnosComponent implements OnInit {
 
 
   CrearTurno() {
+    // si el form es invalido nada
+    if (this.registerForm.invalid) {
+      return;
+    }
+
     this.bd.TraerTodos2('consultorios').then(consultorios => {
       console.log(consultorios);
-      consultorios = consultorios.filter(consuLibre => consuLibre.Estado === 'Libre');
 
-      if (consultorios.length < 1) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Atencion',
-          text: 'Todos los consultorios estan ocupados, los especialistas deben finalizar los turnos iniciados',
-        });
-        return;
+      const consultorio = consultorios[Math.floor((Math.random() * consultorios.length))];
+      const especialista: User = this.registerForm.value.especialistaForm;
+      let cliente: User;
+      if (this.usuario.type === 'Cliente' ) {
+        cliente = this.usuario;
+      } else {
+        cliente = this.registerForm.value.clienteForm;
       }
 
-      const consultorio = consultorios[Math.floor((Math.random() * 4))];
-      const especialista: User = this.registerForm.value.especialistaForm;
-      const cliente: User = this.registerForm.value.clienteForm;
 
       let creadoCliente = true;
       let UidRecepcionista = null;
@@ -159,20 +169,30 @@ export class TurnosComponent implements OnInit {
       cancelButtonText: 'Cancelar turno!',
     }).then((result) => {
       if (result.value) {
-        turno.Estado = EstadoTurno.Iniciado;
-        console.log(turno);
-        this.bd.ModificarUno(turno, 'turnos');
         this.bd.TraerUno(turno.ConsultorioId, 'consultorios').then(consultorio => {
           console.log(consultorio);
-          consultorio.Estado = 'Ocupado';
-          console.log(consultorio);
-          this.bd.ModificarUno(consultorio, 'consultorios');
+          if (consultorio.Estado === 'Ocupado') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Atencion',
+              text: `El consultorio ${turno.Consultorio} se encuentra ocupado,
+              el especialista ${consultorio.Especialista} debe finalizar de atender primero.`
+            });
+          } else {
+            consultorio.Estado = 'Ocupado';
+            consultorio.Especialista = turno.NombreEspecialista;
+            consultorio.Paciente = turno.NombreCliente;
+            console.log(consultorio);
+            this.bd.ModificarUno(consultorio, 'consultorios');
+            turno.Estado = EstadoTurno.Iniciado;
+            console.log(turno);
+            this.bd.ModificarUno(turno, 'turnos');
+            Swal.fire(
+              'Iniciado!',
+              'El turno ha sido iniciado, el paciente puede ingresar.',
+            );
+          }
         });
-        Swal.fire(
-          'Iniciado!',
-          'El turno ha sido iniciado, el paciente puede ingresar.',
-          'success'
-        );
       } else if (
         result.dismiss === Swal.DismissReason.cancel
       ) {
@@ -182,7 +202,6 @@ export class TurnosComponent implements OnInit {
         Swal.fire(
           'Cancelado!',
           'El turno ha sido cancelado.',
-          'success'
         );
       }
     });
@@ -203,7 +222,6 @@ export class TurnosComponent implements OnInit {
         Swal.fire(
           'Finalizado!',
           'El turno ha sido completado.',
-          'success'
         );
         Swal.fire({
           input: 'textarea',
@@ -219,6 +237,8 @@ export class TurnosComponent implements OnInit {
               this.bd.ModificarUno(turno, 'turnos');
               this.bd.TraerUno(turno.ConsultorioId, 'consultorios').then(consultorio => {
               consultorio.Estado = 'Libre';
+              consultorio.Especialista = '';
+              consultorio.Paciente = '';
               this.bd.ModificarUno(consultorio, 'consultorios');
               });
             }
@@ -360,6 +380,12 @@ export class TurnosComponent implements OnInit {
                     .sort((a, b) => a.NombreCliente.localeCompare(b.NombreCliente));
             });
           break;
+      case 'Cant. de dias sin turnos':
+          this.listadoObservable = this.bd.TraerTodos('turnos');
+          this.listadoObservable.subscribe(turnos => {
+              this.FiltroAdminDiasSinTurnos(turnos);
+            });
+          break;
     }
   }
 
@@ -374,28 +400,67 @@ export class TurnosComponent implements OnInit {
       );
       return;
     }
+    this.listadoObservable = this.bd.TraerTodos('turnos');
+    this.listadoObservable.subscribe(turnos => {
+              let turnosList: number;
+              turnosList = turnos.filter(x => x.Fecha >= fechaDesde && x.Fecha <= fechaHasta).length;
 
-    let turnosList;
-    turnosList = this.turnos.filter(x => x.Fecha >= fechaDesde && x.Fecha <= fechaHasta).length;
-
-    Swal.fire(
-      `Hay ${turnosList} turnos registrados entre el ${fechaDesde} y ${fechaHasta}.`
-    );
+              Swal.fire(
+                `Hay ${turnosList} turnos registrados entre el ${fechaDesde} y ${fechaHasta}.`
+              );
+    });
   }
 
+
+  FiltroAdminDiasSinTurnos(turnos) {
+    const fechaDesde = this.minDate;
+
+    const turnosPorFecha = turnos.filter(x => new Date(x.Fecha) > fechaDesde)
+                                 .sort((a, b) => new Date(a.Fecha).getTime() - new Date(b.Fecha).getTime());
+    // console.log(fechaDesde);
+    // console.log(new Date(this.turnos[0].Fecha));
+    console.log(turnosPorFecha);
+
+    const primerTurnoRadio = turnosPorFecha.find(t => t.Especialidad === 'Radiologia');
+    const primerTurnoCario = turnosPorFecha.find(t => t.Especialidad === 'Cariologia');
+    const primerTurnoOrto = turnosPorFecha.find(t => t.Especialidad === 'Ortodoncia');
+    const primerTurnoImpla = turnosPorFecha.find(t => t.Especialidad === 'Implantologia');
+
+    console.log(primerTurnoRadio.Fecha);
+
+    const oneDay = 24 * 60 * 60 * 1000;
+    const diasRadio = (primerTurnoRadio) ? Math.round(Math.abs((fechaDesde.setHours(0, 0, 0)
+                       - new Date(primerTurnoRadio.Fecha).setHours(0, 0, 0)) / oneDay)) + 1 : 0;
+    const diasCario = (primerTurnoCario) ? Math.round(Math.abs((fechaDesde.setHours(0, 0, 0) -
+                            new Date(primerTurnoCario.Fecha).setHours(0, 0, 0)) / oneDay)) : 0;
+    const diasOrto = (primerTurnoOrto) ? Math.round(Math.abs((fechaDesde.setHours(0, 0, 0)
+                     - new Date(primerTurnoOrto.Fecha).setHours(0, 0, 0)) / oneDay)) : 0;
+    const diasImpla = (primerTurnoImpla) ? Math.round(Math.abs((fechaDesde.setHours(0, 0, 0)
+                       - new Date(primerTurnoImpla.Fecha).setHours(0, 0, 0)) / oneDay)) + 1 : 0;
+
+
+    Swal.fire(
+      `Hay ${diasRadio} dias sin turnos de Radiologia, ${diasCario} de Cariologia,
+        ${diasOrto} de Ortodoncia y ${diasImpla} de Implantologia.`
+    );
+
+    // let turnosList;
+    // turnosList = this.turnos.filter(x => x.Fecha >= fechaDesde && x.Fecha <= fechaHasta).length;
+  }
 
 
   TraerClientes() {
     this.listadoObservable = this.bd.TraerTodos('users');
     this.listadoObservable.subscribe(x => {
       this.clientes = x.filter(user => user.type === 'Cliente');
+      this.cards.clientes = this.clientes.length;
     });
   }
 
   TraerEspecialistas() {
     this.listadoObservable = this.bd.TraerTodos('users');
     this.listadoObservable.subscribe(x => {
-      this.especialistas = x.filter(user => user.type === 'Especialista');
+      this.cards.especialistas = x.filter(user => user.type === 'Especialista').length;
     });
   }
 
@@ -421,8 +486,9 @@ export class TurnosComponent implements OnInit {
     this.listadoObservable = this.bd.TraerTodos('users');
     this.listadoObservable.subscribe(usuarios => {
       especialistasAux = usuarios.filter(usuario => usuario.type === 'Especialista');
-      especialistasAux.forEach(especialista => {
-        if (turnosIgualDia.filter(turnoDia => turnoDia.UidEspecialista === especialista.Uid).length < 3) {
+      especialistasAux.forEach((especialista: User) => {
+        const turnosIgualDiaYEsp = turnosIgualDia.filter(turnoDia => turnoDia.UidEspecialista === especialista.uid);
+        if (turnosIgualDiaYEsp.length < 3) {
           this.especialistas.push(especialista);
         }
       });
@@ -435,13 +501,16 @@ export class TurnosComponent implements OnInit {
     this.listadoObservable.subscribe(turnos => {
       console.log(this.turnos);
       if (this.usuario.type === 'Cliente') {
-        this.turnos = turnos.filter(x => x.UidCliente === this.usuario.uid).sort((a, b) => b.Fecha - a.Fecha);
+        this.turnos = turnos.filter(x => x.UidCliente === this.usuario.uid).sort((a, b) => b.Fecha.localeCompare(a.Fecha));
       } else if (this.usuario.type === 'Recepcionista') {
-        this.turnos = turnos.sort((a, b) => b.Fecha - a.Fecha);
+        this.turnos = turnos.sort((a, b) => a.Estado.localeCompare(b.Estado));
+        this.cards.turnos = this.turnos.length;
       } else if (this.usuario.type === 'Especialista') {
-        this.turnos = turnos.filter(x => x.UidEspecialista === this.usuario.uid).sort((a, b) => b.Fecha - a.Fecha);
+        this.turnos = turnos.filter(x => x.UidEspecialista === this.usuario.uid).sort((a, b) => b.Fecha.localeCompare(a.Fecha));
+        this.cards.turnos = this.turnos.length;
       } else if (this.usuario.type === 'Admin') {
         this.turnos =  turnos.sort((a, b) => a.Especialidad.localeCompare(b.Especialidad));
+        this.cards.turnos = this.turnos.length;
       }
     });
   }

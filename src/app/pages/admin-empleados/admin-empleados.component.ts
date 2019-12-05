@@ -14,6 +14,12 @@ export class AdminEmpleadosComponent implements OnInit {
   listadoEmpleados: Array<User>;
   logs;
 
+  cards = {
+    especialistas: 0,
+    total: 0,
+    recepcionistas: 0,
+  };
+
   listadoDeUsuarios: Observable<any[]>;
 
 
@@ -36,12 +42,12 @@ export class AdminEmpleadosComponent implements OnInit {
 
 
 
-
   ObtenerUsuarios2() {
     this.listadoDeUsuarios = this.bd.TraerTodos('users');
     this.listadoDeUsuarios.subscribe(x => {
       this.listadoEmpleados = x.filter(user => user.type.toUpperCase() === 'Recepcionista'.toUpperCase() ||
       user.type.toUpperCase() === 'Especialista'.toUpperCase());
+      this.obtenerCards(this.listadoEmpleados);
     });
   }
 
@@ -67,6 +73,18 @@ export class AdminEmpleadosComponent implements OnInit {
         this.logs = result.map(log => log.createdAt.toDate());
       });
   }
+
+  obtenerCards(listado) {
+    listado.forEach((usuario: User) => {
+        this.cards.total++;
+        if(usuario.type === 'Recepcionista') {
+          this.cards.recepcionistas++;
+        } else if(usuario.type === 'Especialista') {
+          this.cards.especialistas++;
+        }
+    });
+  }
+
 
 
 }
