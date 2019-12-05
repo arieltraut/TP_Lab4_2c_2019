@@ -62,7 +62,7 @@ export class FirebaseAuthService {
   }
 
   // Sign up with email/password
-  SignUp(email, password, name, esAdmin, photoURL?, type?, especialidad?) {
+  SignUp(email, password, name, esAdmin, photoURL?, type?, especialidad?): any {
     let admin;
     if (esAdmin) {
       admin = JSON.parse(localStorage.getItem('user-bd'));

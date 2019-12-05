@@ -79,14 +79,22 @@ export class AdminAltasComponent implements OnInit {
                                       this.registerForm.value.type,
                                       this.registerForm.value.especialidad)
       .then((result) => {
+        console.log(result);
+
+        if (result) {
+          this.onReset();
+          this.mostrarAlert(true);
+          Swal.fire({
+            icon: 'success',
+            title: 'Usuario creado!',
+            text: `Se realizo el alta con exito`
+          });
+        } else {
+          this.mostrarAlert(false);
+        }
         this.isLoading = false;
-        Swal.fire({
-          icon: 'success',
-          title: 'Usuario creado!',
-          text: `Se realizo el alta con exito`
-        });
-        this.onReset();
-        this.mostrarAlert(true);
+
+
       }).catch((error) => {
         this.isLoading = false;
         this.onReset();
