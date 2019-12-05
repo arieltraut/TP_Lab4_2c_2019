@@ -139,7 +139,7 @@
                     {{turno.NombreCliente}}
                 </td>
                 <td>
-                    <span class="fuenteTabla text-sm">{{turno.Fecha}}</span>
+                    <span class="fuenteTabla text-sm">{{turno.Fecha | date:'shortDate'}}</span>
                 </td>
                 <td *ngIf="turno.Estado == 'Pendiente' && this.usuario.type == 'Recepcionista'">
                   <span class="fuenteTabla text-sm effect-1" ><a (click)="iniciarYCancelarTurno(turno)" data-tooltip="Iniciar o cancelar turno"><i class="fas fa-circle pendiente mr-3"></i> {{turno.Estado}}</a> </span>
