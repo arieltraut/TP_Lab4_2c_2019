@@ -91,9 +91,9 @@ export class TurnosComponent implements OnInit {
 
   CrearTurno() {
     // si el form es invalido nada
-    if (this.registerForm.invalid) {
-      return;
-    }
+    // if (this.registerForm.invalid) {
+    //   return;
+    // }
 
     this.bd.TraerTodos2('consultorios').then(consultorios => {
       console.log(consultorios);
